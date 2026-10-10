@@ -1,14 +1,14 @@
 {
-  "name": "Sofrito: hoja de ruta de contenido",
+  "name": "Sofrito",
   "short_name": "Sofrito",
-  "description": "El método de guion técnico de Belmont, paso a paso.",
+  "description": "Tu método de contenido, paso a paso.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#08090D",
-  "theme_color": "#08090D",
+  "background_color": "#05080B",
+  "theme_color": "#05080B",
   "icons": [
     {
       "src": "icon-192.png",
