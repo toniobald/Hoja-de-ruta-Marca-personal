@@ -1,5 +1,5 @@
 /* Service worker: la app abre sin conexión. Sube VERSION cada vez que cambies index.html. */
-var VERSION="v1";
+var VERSION="v3";
 var CACHE="hoja-ruta-"+VERSION;
 var SHELL=["./","index.html","manifest.webmanifest","icon-180.png","icon-192.png","icon-512.png"];
 
