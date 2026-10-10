@@ -489,6 +489,19 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.85}
 .ainote{margin:10px 0 0;padding:10px 12px;border-left:3px solid var(--accent);border-radius:0 var(--r-sm) var(--r-sm) 0;background:var(--accent-soft);font-size:.9rem;line-height:1.4}
 .ainote b{font:600 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-text);margin-right:6px}
 .btn[disabled]{opacity:.55;pointer-events:none}
+.met{display:grid;gap:10px;padding:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.met-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.met-p{font:600 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid currentColor}
+.met-p.ig{color:var(--c-red)}.met-p.tt{color:var(--c-blue)}
+.met-t{font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.met-n{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.met-v{font:900 2.2rem/1 var(--f-display);font-variant-numeric:tabular-nums}
+.met-v i{font:500 .7rem var(--f-mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:6px}
+.met-d{font:600 .8rem var(--f-mono);color:var(--c-blue)}
+.spark{width:84px;height:30px;margin-left:auto;color:var(--accent)}
+.met-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px}
+.met-g span{display:grid;font:500 .68rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.met-g b{font:700 1.05rem var(--f-body);letter-spacing:0;text-transform:none;color:var(--ink);font-variant-numeric:tabular-nums}
 .hkbox{display:grid;gap:2px;margin-top:8px;padding-top:12px;border-top:1px dashed var(--line)}
 .hkbox > b{font:600 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-text)}
 .hkbox em{font-style:normal;color:var(--muted)}
@@ -649,6 +662,8 @@ function mergeData(o){
 }
 function payload(){return {checks:S.checks,weeks:S.weeks,ideas:S.ideas,scripts:S.scripts,plan:S.plan,days:S.days,pubs:S.pubs,push:S.push};}
 
+var MKEY="sofrito-metricas-v1";
+var MET=loadJSON(MKEY);
 var CONN=loadJSON(NKEY);
 var _cc=loadJSON(CKEY);
 if(_cc)applyContent(_cc);
@@ -740,11 +755,29 @@ function push(){
     setStatus((e.status===401||e.status===403)?"auth":"offline");
   });
 }
+/* Borradores de guion del contenido privado: solo rellenan un guion que está vacío y solo una vez por dispositivo */
+function seedScripts(){
+  var sc=SEED.scripts,ch=false;
+  if(!sc)return false;
+  S.ui.seeded=S.ui.seeded||{};
+  [1,2].forEach(function(v){
+    var s=S.scripts[v],d=sc[v];
+    if(!d||!s||S.ui.seeded[v])return;
+    var empty=!s.title&&!s.hook&&!s.need&&!s.cta&&!s.emo&&!s.you&&(s.rows||[]).every(function(r){return !String(r.text).trim();});
+    S.ui.seeded[v]=true;
+    if(!empty)return;
+    s.title=d.title||"";s.dur=d.dur||s.dur;s.emo=d.emo||"";s.hook=d.hook||"";s.need=d.need||"";s.cta=d.cta||"";s.you=d.you||"";
+    s.rows=(d.rows||[]).map(function(r){var n=newRow(r[0]);n.text=r[1];return n;});
+    ch=true;
+  });
+  putJSON(UKEY,S.ui);
+  return ch;
+}
 /* Descarga contenido y datos del repo privado. Devuelve "ok" o el código de error. */
 function sync(){
   if(!CONN)return Promise.resolve("noconn");
   setStatus("syncing");
-  return Promise.all([ghGet("contenido.json"),ghGet("datos.json")]).then(function(r){
+  return Promise.all([ghGet("contenido.json"),ghGet("datos.json"),ghGet("metricas.json").catch(function(){return null;})]).then(function(r){
     var c=r[0],d=r[1],changed=false,pending=!!localStorage.getItem(PKEY);
     if(!c){var e=new Error("sin contenido");e.status=404;e.what="contenido";throw e;}
     var text=b64dec(c.content),prev=null;
@@ -770,6 +803,14 @@ function sync(){
       try{localStorage.setItem(PKEY,"1");}catch(x){}
       schedulePush();
     }
+    if(r[2]){
+      try{
+        var mt=b64dec(r[2].content),mprev=null;
+        try{mprev=localStorage.getItem(MKEY);}catch(x){}
+        if(mt!==mprev){try{localStorage.setItem(MKEY,mt);}catch(x){}MET=JSON.parse(mt);changed=true;}
+      }catch(x){}
+    }
+    if(seedScripts()){changed=true;save();}
     if(curStatus==="syncing")setStatus("saved");
     if(changed)rerender();
     return "ok";
@@ -1633,12 +1674,54 @@ function pubTotalsHTML(){
          '<div class="stat"><b>'+fmtNum(t.comments)+'</b><span>Comentarios</span></div>'+
          '<div class="stat"><b>'+String(t.rate).replace(".",",")+'%</b><span>Guardados por vista</span></div>';
 }
+/* Métricas automáticas de Instagram y TikTok (las trae el workflow Métricas a metricas.json) */
+function metSpark(vals){
+  if(vals.length<2)return '';
+  var mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals),rg=(mx-mn)||1,w=120,h=30,pts=vals.map(function(v,i){
+    return (i*(w/(vals.length-1))).toFixed(1)+','+(h-3-((v-mn)/rg)*(h-6)).toFixed(1);
+  }).join(' ');
+  return '<svg class="spark" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true"><polyline points="'+pts+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+function metHTML(){
+  if(!MET||!MET.media){
+    return '<div class="sect" style="margin-top:0"><h3>Insights</h3><p class="fine" style="margin-top:0">Aún no hay datos automáticos. Cuando el workflow Métricas haya corrido, aquí salen tus vídeos de Instagram y TikTok con su evolución diaria.</p></div>';
+  }
+  var items=Object.keys(MET.media).map(function(k){
+    var m=MET.media[k],f=Object.keys(m.series||{}).sort();
+    return {m:m,f:f,last:f.length?m.series[f[f.length-1]]:null};
+  }).filter(function(x){return x.last;});
+  items.sort(function(a,b){return a.m.fecha<b.m.fecha?1:(a.m.fecha>b.m.fecha?-1:0);});
+  var h='<div class="sect" style="margin-top:0"><h3>Insights</h3>';
+  if(!items.length)return h+'<p class="fine" style="margin-top:0">Todavía no hay vídeos en el histórico.</p></div>';
+  var tv=0,ts=0;
+  items.forEach(function(x){tv+=x.last.views;ts+=x.last.saves;});
+  h+='<p class="fine" style="margin-top:0">Actualizado '+esc(String(MET.actualizado||"").slice(0,10))+'. '+items.length+' vídeos · '+fmtNum(tv)+' vistas · '+fmtNum(ts)+' guardados.</p><div class="list">';
+  items.slice(0,12).forEach(function(x){
+    var l=x.last,series=x.f.map(function(d){return x.m.series[d].views;});
+    var base=null,i,cut=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
+    for(i=0;i<x.f.length;i++){if(x.f[i]<=cut)base=x.m.series[x.f[i]].views;}
+    if(base===null&&x.f.length>1)base=x.m.series[x.f[0]].views;
+    var delta=base===null?null:l.views-base,rate=l.views>0?Math.round(l.saves/l.views*1000)/10:0;
+    h+='<article class="met"><div class="met-h"><span class="met-p '+(x.m.plataforma==="tiktok"?'tt':'ig')+'">'+(x.m.plataforma==="tiktok"?'TikTok':'Instagram')+'</span>'+
+       '<span class="pub-d">'+esc(x.m.fecha||"")+'</span></div>'+
+       '<b class="met-t">'+esc(x.m.caption||"Sin descripción")+'</b>'+
+       '<div class="met-n"><span class="met-v">'+fmtNum(l.views)+'<i>vistas</i></span>'+
+       (delta!==null?'<span class="met-d">'+(delta>=0?'+':'')+fmtNum(delta)+' en 7 días</span>':'')+
+       metSpark(series)+'</div>'+
+       '<div class="met-g"><span><b>'+fmtNum(l.saves)+'</b>guardados</span><span><b>'+String(rate).replace(".",",")+'%</b>guard./vista</span>'+
+       '<span><b>'+fmtNum(l.shares)+'</b>compartidos</span><span><b>'+fmtNum(l.likes)+'</b>likes</span><span><b>'+fmtNum(l.comments)+'</b>coment.</span>'+
+       (l.reach?'<span><b>'+fmtNum(l.reach)+'</b>alcance</span>':'')+'</div>'+
+       (x.m.permalink?'<a class="pub-u" href="'+esc(x.m.permalink)+'" target="_blank" rel="noopener">Abrir publicación</a>':'')+'</article>';
+  });
+  return h+'</div></div>';
+}
 function vDiario(){
   var h='<header class="panel-head"><h2 class="big-h">Diario</h2><p>Lo que haces cada día y lo que publicas. Sin esto no hay forma de saber qué funciona.</p></header>';
   h+='<div class="seg" role="group" aria-label="Diario" data-box="dsub"><span class="bx" aria-hidden="true"></span>'+
      '<button type="button" data-dsub="racha" aria-pressed="'+(S.ui.dsub==="racha")+'">Racha</button>'+
      '<button type="button" data-dsub="publicado" aria-pressed="'+(S.ui.dsub==="publicado")+'">Publicado</button></div>';
   if(S.ui.dsub==="publicado"){
+    h+=metHTML();
     h+='<div class="form" style="margin-top:0"><div class="field"><label for="pb-title">Título del vídeo</label><input type="text" id="pb-title" autocomplete="off" placeholder="Cómo lo llamaste"></div>'+
        '<div class="field"><label for="pb-url">Enlace (opcional)</label><input type="text" id="pb-url" autocomplete="off" inputmode="url" placeholder="https://"></div></div>'+
        '<div class="tools"><button type="button" class="btn primary" data-act="pub-add">Registrar publicación</button></div>';
