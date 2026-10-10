@@ -3,522 +3,1434 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Hoja de ruta</title>
-<meta name="theme-color" content="#2748C9">
+<title>Toma Cero</title>
+<meta name="description" content="Hoja de ruta de contenido: el método de guion técnico de Belmont, paso a paso.">
+<meta name="theme-color" content="#08090D" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#E9ECF2" media="(prefers-color-scheme: light)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Hoja de ruta">
+<meta name="apple-mobile-web-app-title" content="Toma Cero">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=JetBrains+Mono:wght@400;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700..900&family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <style>
-/* Layout: una columna de lectura con barra de progreso fija; cada fase = "qué enseña" + "hazlo tú" en dos columnas.
-   Los cuatro colores del guion técnico de Belmont (azul, rojo, amarillo, blanco) solo aparecen en la plantilla. */
+/* Concepto: claqueta y tira de película. Oscuro por defecto (sala de montaje), papel de guion en claro.
+   La claqueta es siempre negra: es un objeto. Un solo acento (azul = "tú" en el código de Belmont).
+   Rojo, amarillo y blanco aparecen solo en las rayas de la claqueta, el confeti y la leyenda del guion.
+   Radios: superficies 18px, controles 12px, botones y chips en píldora, fotogramas 8px. */
 :root{
-  --bg:#F5F6F8; --surface:#FFFFFF; --fg:#15181F; --muted:#586070; --line:#D9DCE3;
-  --accent:#2748C9; --accent-soft:#E4E9FB; --on-accent:#FFFFFF;
-  --c-blue:#2748C9; --c-red:#C23B3B; --c-yellow:#9A6F00; --c-white:#6B7280;
-  --warn-bg:#FBEDED; --warn:#9F2B2B;
-  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
-  --f-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
-  --f-mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+  --bg:#08090D; --bg-2:#0E1017; --surface:#12151E; --surface-2:#191D29; --surface-hi:#1F2433;
+  --ink:#F3F4F8; --muted:#9AA1B3; --line:rgba(255,255,255,.11); --line-soft:rgba(255,255,255,.06); --hl:rgba(255,255,255,.07);
+  --accent:#4263FF; --accent-ink:#FFFFFF; --accent-text:#93A6FF; --accent-soft:rgba(66,99,255,.18);
+  --c-blue:#8BA0FF; --c-red:#FF7F82; --c-yellow:#FFC93C; --c-plain:#C9CEDB;
+  --blue-soft:rgba(139,160,255,.15); --red-soft:rgba(255,127,130,.14); --yel-soft:rgba(255,201,60,.14); --plain-soft:rgba(201,206,219,.12);
+  --slate:#030407; --slate-ink:#F4F5F8; --slate-line:rgba(255,255,255,.16); --tick:#7C92FF;
+  --strip:#04050A; --hole:rgba(255,255,255,.18);
+  --shadow:0 22px 44px -22px rgba(0,0,0,.75); --grain:.07; --glass:rgba(18,21,30,.72);
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Geist","Segoe UI",system-ui,Arial,sans-serif;
+  --f-mono:"Geist Mono",Consolas,"Courier New",monospace;
+  --r:18px; --r-sm:12px; --ease:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0F1218; --surface:#171B23; --fg:#E9ECF2; --muted:#98A0AE; --line:#2A303B;
-    --accent:#8FA8FF; --accent-soft:#1D2540; --on-accent:#0F1218;
-    --c-blue:#8FA8FF; --c-red:#FF8E8E; --c-yellow:#F0C24B; --c-white:#C9CED8;
-    --warn-bg:#2B1A1C; --warn:#FF9C9C; color-scheme:dark;
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#E9ECF2; --bg-2:#DFE3EB; --surface:#FFFFFF; --surface-2:#F3F5F9; --surface-hi:#FFFFFF;
+    --ink:#0A0C13; --muted:#4F596C; --line:rgba(10,12,19,.14); --line-soft:rgba(10,12,19,.07); --hl:rgba(255,255,255,.9);
+    --accent:#2447E8; --accent-ink:#FFFFFF; --accent-text:#2447E8; --accent-soft:rgba(36,71,232,.10);
+    --c-blue:#2447E8; --c-red:#BE2F34; --c-yellow:#7D5800; --c-plain:#4F596C;
+    --blue-soft:rgba(36,71,232,.10); --red-soft:rgba(190,47,52,.10); --yel-soft:rgba(180,130,0,.16); --plain-soft:rgba(79,89,108,.12);
+    --strip:#CBD0DB; --hole:rgba(10,12,19,.30);
+    --shadow:0 20px 38px -22px rgba(20,28,60,.38); --grain:.05; --glass:rgba(255,255,255,.78);
+    color-scheme:light;
   }
 }
-:root[data-theme="dark"]{
-  --bg:#0F1218; --surface:#171B23; --fg:#E9ECF2; --muted:#98A0AE; --line:#2A303B;
-  --accent:#8FA8FF; --accent-soft:#1D2540; --on-accent:#0F1218;
-  --c-blue:#8FA8FF; --c-red:#FF8E8E; --c-yellow:#F0C24B; --c-white:#C9CED8;
-  --warn-bg:#2B1A1C; --warn:#FF9C9C; color-scheme:dark;
+:root[data-theme="light"]{
+  --bg:#E9ECF2; --bg-2:#DFE3EB; --surface:#FFFFFF; --surface-2:#F3F5F9; --surface-hi:#FFFFFF;
+  --ink:#0A0C13; --muted:#4F596C; --line:rgba(10,12,19,.14); --line-soft:rgba(10,12,19,.07); --hl:rgba(255,255,255,.9);
+  --accent:#2447E8; --accent-ink:#FFFFFF; --accent-text:#2447E8; --accent-soft:rgba(36,71,232,.10);
+  --c-blue:#2447E8; --c-red:#BE2F34; --c-yellow:#7D5800; --c-plain:#4F596C;
+  --blue-soft:rgba(36,71,232,.10); --red-soft:rgba(190,47,52,.10); --yel-soft:rgba(180,130,0,.16); --plain-soft:rgba(79,89,108,.12);
+  --strip:#CBD0DB; --hole:rgba(10,12,19,.30);
+  --shadow:0 20px 38px -22px rgba(20,28,60,.38); --grain:.05; --glass:rgba(255,255,255,.78);
+  color-scheme:light;
 }
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:17px;line-height:1.55;
-  padding-inline:16px;padding-block:0}
-.wrap{max-width:920px;margin-inline:auto}
-a{color:var(--accent)}
-h1,h2,h3{font-family:var(--f-display);line-height:1.1;text-wrap:balance;margin:0}
-h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800;letter-spacing:-.01em}
-h2{font-size:clamp(1.5rem,4vw,2rem);font-weight:800}
-h3{font-size:.8rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-p{margin:0 0 .8em}
-ul{margin:0;padding-left:1.15em}
-li{margin-bottom:.45em}
-code,.mono{font-family:var(--f-mono);font-size:.88em}
 
-header.top{padding-block:40px 24px}
-.lead{font-size:1.15rem;color:var(--muted);max-width:60ch;margin-top:14px}
-.sources{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.pill{font-family:var(--f-mono);font-size:.78rem;border:1px solid var(--line);background:var(--surface);
-  border-radius:999px;padding:4px 10px;text-decoration:none;color:var(--fg)}
-.pill b{color:var(--accent);margin-right:6px}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 1rem/1.55 var(--f-body);-webkit-text-size-adjust:100%;overflow-x:clip}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(900px 520px at 50% -140px,rgba(255,255,255,.07),transparent 70%)}
+:root[data-theme="light"] body::before{background:radial-gradient(900px 520px at 50% -140px,rgba(255,255,255,.9),transparent 70%)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) body::before{background:radial-gradient(900px 520px at 50% -140px,rgba(255,255,255,.9),transparent 70%)}}
+.grain{position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:var(--grain);mix-blend-mode:overlay;background-size:160px 160px}
+@media (prefers-reduced-motion:no-preference){.grain{animation:flicker .9s steps(6) infinite}}
+@keyframes flicker{0%{transform:translate(0,0)}17%{transform:translate(-3%,2%)}33%{transform:translate(2%,-3%)}50%{transform:translate(-2%,-1%)}67%{transform:translate(3%,3%)}83%{transform:translate(-1%,2%)}100%{transform:translate(0,0)}}
 
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
-  border-bottom:1px solid var(--line);margin-inline:-16px;padding:10px 16px}
-.bar-in{max-width:920px;margin-inline:auto;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.nav{display:flex;gap:6px;overflow-x:auto;flex:1 1 320px;min-width:0;padding-bottom:2px}
-.nav a{font-family:var(--f-mono);font-size:.8rem;text-decoration:none;color:var(--muted);
-  border:1px solid var(--line);border-radius:6px;padding:3px 9px;white-space:nowrap;background:var(--surface)}
-.nav a:hover,.nav a:focus-visible{color:var(--fg);border-color:var(--accent);outline:none}
-.prog{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
-.prog-track{width:120px;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
-.prog-fill{height:100%;width:0;background:var(--accent);transition:width .25s}
+h1,h2,h3,h4{font-family:var(--f-body);margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:var(--accent-text)}
+mark{color:inherit;background:linear-gradient(transparent 56%,rgba(255,201,60,.5) 56% 94%,transparent 94%);padding:0 .08em}
+:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
+button:active{transform:scale(.97)}
+button{transition:transform .12s var(--ease),background-color .2s,border-color .2s,color .2s,opacity .2s}
+.surf{background:linear-gradient(180deg,var(--surface-hi),var(--surface));border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:inset 0 1px 0 var(--hl),var(--shadow)}
 
-section{padding-block:44px;border-bottom:1px solid var(--line)}
-.sec-head{display:flex;gap:14px;align-items:baseline;margin-bottom:6px}
-.num{font-family:var(--f-mono);font-weight:600;font-size:.95rem;color:var(--accent);
-  background:var(--accent-soft);border-radius:6px;padding:2px 9px;flex:none}
-.sub{color:var(--muted);margin:0 0 22px;max-width:62ch}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-@media (max-width:760px){.cols{grid-template-columns:1fr}}
-.col{min-width:0}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
-.src{color:var(--muted);font-size:.9em}
-a.ts{font-family:var(--f-mono);font-size:.78rem;text-decoration:none;white-space:nowrap;
-  border:1px solid var(--line);border-radius:5px;padding:0 5px;margin-left:4px;color:var(--accent);background:var(--surface)}
-a.ts:hover{border-color:var(--accent)}
+/* Estructura: dock flotante en móvil, columna lateral en escritorio */
+.app{position:relative;z-index:1;min-height:100dvh;display:block}
+.main{width:100%;max-width:840px;margin-inline:auto;padding:22px 16px 140px;transform-origin:50% 0}
+.nav{position:fixed;left:12px;right:12px;max-width:520px;margin:0 auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:20;
+  display:flex;gap:2px;padding:6px;border-radius:26px;background:var(--surface);border:1px solid var(--line);
+  box-shadow:0 20px 44px -14px rgba(0,0,0,.6),inset 0 1px 0 var(--hl)}
+@supports (backdrop-filter:blur(1px)){
+  .nav{background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%)}
+}
+@media (prefers-reduced-transparency:reduce){.nav{background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none}}
+.brand{display:none}
+.nav .ind{position:absolute;left:0;top:0;width:0;height:0;border-radius:20px;background:var(--accent);z-index:0;pointer-events:none;will-change:transform,width,height}
+.nav button{position:relative;z-index:1;flex:1;min-height:50px;border:0;background:none;color:var(--muted);border-radius:20px;
+  font:600 .82rem/1.1 var(--f-body);display:grid;place-items:center;padding:6px 2px}
+.nav button[aria-current="page"]{color:var(--accent-ink)}
+@media (min-width:900px){
+  .app{display:grid;grid-template-columns:248px minmax(0,1fr)}
+  .nav{position:sticky;top:0;left:auto;right:auto;max-width:none;margin:0;height:100dvh;flex-direction:column;justify-content:flex-start;gap:6px;
+    padding:30px 16px;border-radius:0;border:0;border-right:1px solid var(--line);box-shadow:none;background:var(--bg-2)}
+  .brand{display:block;padding:0 12px 26px;font:900 2.3rem/.88 var(--f-display);text-transform:uppercase;letter-spacing:.005em}
+  .brand small{display:block;margin-top:10px;font:500 .72rem var(--f-mono);letter-spacing:.08em;color:var(--muted)}
+  .nav .ind{border-radius:14px}
+  .nav button{flex:none;display:flex;align-items:center;justify-content:flex-start;min-height:48px;padding:0 14px;font-size:1rem;border-radius:14px}
+  .main{padding:44px 48px 90px}
+}
 
-.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;cursor:pointer;border-top:1px solid var(--line)}
-.chk:first-of-type{border-top:0}
-.chk input{margin-top:.38em;width:18px;height:18px;flex:none;accent-color:var(--accent)}
-.chk span{min-width:0}
-.chk input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+/* Paneles y titulares */
+.panel-head{margin-bottom:18px}
+.big-h{font:900 clamp(2.8rem,13vw,4.6rem)/.9 var(--f-display);text-transform:uppercase;letter-spacing:.005em}
+.panel-head p{color:var(--muted);margin-top:10px;max-width:56ch}
+.wd{display:inline-block;overflow:hidden;vertical-align:top;padding-top:.2em;margin-top:-.2em;padding-bottom:.04em}
+.wi{display:inline-block}
 
-.mistake{margin-top:22px;background:var(--warn-bg);color:var(--fg);border-radius:8px;padding:12px 16px;
-  border-left:4px solid var(--warn)}
-.mistake b{color:var(--warn);font-family:var(--f-display);letter-spacing:.02em}
-.yours{margin-top:18px;border:1px dashed var(--accent);border-radius:8px;padding:12px 16px;background:var(--accent-soft)}
-.yours b{font-family:var(--f-display);color:var(--accent)}
+/* Inicio: claqueta */
+.slate-wrap{perspective:1000px;padding-top:40px}
+.slate{position:relative;transform-style:preserve-3d;will-change:transform;cursor:pointer;-webkit-user-select:none;user-select:none}
+.stick{position:relative;z-index:2;height:36px;border-radius:12px 12px 4px 4px;transform-origin:7% 100%;margin-bottom:-3px;
+  background:repeating-linear-gradient(-60deg,#F4F5F8 0 24px,#3F5EFB 24px 48px,#F4F5F8 48px 72px,#E5484D 72px 96px,#F4F5F8 96px 120px,#FFC93C 120px 144px);
+  box-shadow:inset 0 0 0 2px #030407,0 10px 24px -8px rgba(0,0,0,.65)}
+.board{position:relative;background:var(--slate);color:var(--slate-ink);border-radius:4px 4px var(--r) var(--r);padding:18px 18px 14px;
+  border:1px solid var(--slate-line);box-shadow:0 30px 60px -26px rgba(0,0,0,.8)}
+.board small{display:block;font:500 .68rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(244,245,248,.6)}
+.sl-title{margin:6px 0 0;font:900 clamp(2.5rem,12.5vw,4.4rem)/.88 var(--f-display);text-transform:uppercase;letter-spacing:.005em}
+.sl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:16px;border-top:1px solid var(--slate-line);border-bottom:1px solid var(--slate-line)}
+.sl-grid > div{padding:10px 12px;border-left:1px solid var(--slate-line)}
+.sl-grid > div:first-child{border-left:0;padding-left:0}
+.sl-grid b{display:block;margin-top:2px;font:800 clamp(1.3rem,5.6vw,1.9rem)/1 var(--f-display);text-transform:uppercase;font-variant-numeric:tabular-nums}
+.ticks{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px}
+.tg{display:flex;gap:3px;padding:8px 2px;min-height:40px;border:0;background:none;align-items:center}
+.tg i{display:block;width:5px;height:22px;border-radius:2px;background:rgba(255,255,255,.17);transform-origin:50% 100%}
+.tg i.on{background:var(--tick);animation:tickpop .6s var(--spring) both;animation-delay:calc(var(--i,0)*16ms)}
+@keyframes tickpop{0%{transform:scaleY(.3)}55%{transform:scaleY(1.35)}100%{transform:none}}
+.manifesto{margin-top:22px;font:600 clamp(1.15rem,3.6vw,1.5rem)/1.35 var(--f-body);max-width:30ch;text-wrap:balance}
 
-.map{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:20px;padding:0;list-style:none}
-.map li{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.map li b{font-family:var(--f-display);display:block;margin-bottom:2px}
-.map a{text-decoration:none;color:inherit;display:block}
-.map .n{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+.next{position:relative;isolation:isolate;overflow:hidden;margin-top:22px;border-radius:var(--r);padding:20px 20px 24px;color:var(--accent-ink);
+  background:linear-gradient(140deg,#5573FF,#2C47E6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 24px 44px -22px rgba(36,60,230,.7);
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+.next::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;z-index:1;
+  background:linear-gradient(90deg,#F4F5F8 0 25%,#030407 25% 50%,#E5484D 50% 75%,#FFC93C 75%)}
+.nx-n{font:900 clamp(4.5rem,24vw,7rem)/.78 var(--f-display);color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.65);font-variant-numeric:tabular-nums}
+.next small{display:block;font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.next p{margin:6px 0 14px;font:600 1.1rem/1.35 var(--f-body)}
 
-.script{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin-top:14px}
-.script .row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:9px 14px;border-top:1px solid var(--line);align-items:baseline}
-.script .row:first-child{border-top:0}
-.script .tag{font-family:var(--f-mono);font-size:.75rem;font-weight:600;letter-spacing:.04em}
-.script .txt{min-width:0;overflow-wrap:anywhere}
-.t-blue{color:var(--c-blue)} .t-red{color:var(--c-red)} .t-yellow{color:var(--c-yellow)} .t-white{color:var(--c-white)}
-.head-row{background:var(--accent-soft);font-family:var(--f-mono);font-size:.82rem}
+.btn{min-height:46px;padding:0 20px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);font-weight:600;color:var(--ink)}
+.btn.primary,.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.next .btn{background:#fff;color:#1F36C9;border-color:transparent}
+.btn.quiet{background:none;color:var(--muted);border-color:transparent}
+.btn:disabled{opacity:.4}
 
-.steps{counter-reset:s;list-style:none;padding:0;margin:0}
-.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:10px;margin-bottom:12px}
-.steps li::before{content:counter(s);font-family:var(--f-mono);font-weight:600;color:var(--accent);
-  background:var(--accent-soft);border-radius:6px;height:28px;display:grid;place-items:center}
+.sect{margin-top:36px}
+.sect > h3{font:900 clamp(1.8rem,7vw,2.4rem)/.95 var(--f-display);text-transform:uppercase;margin-bottom:14px}
+.story{list-style:none;margin:0;padding:0}
+.beat{width:100%;display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:14px;align-items:start;text-align:left;
+  background:none;border:0;padding:0 0 22px;position:relative;isolation:isolate}
+.bn{position:relative;font:900 3.2rem/.8 var(--f-display);color:transparent;-webkit-text-stroke:1.5px var(--muted);text-align:center;
+  font-variant-numeric:tabular-nums;transition:color .4s,-webkit-text-stroke-color .4s}
+.bn.done{color:var(--accent-text);-webkit-text-stroke-color:var(--accent-text)}
+.story li:not(:last-child) .bn::after{content:"";position:absolute;left:50%;top:calc(100% + 8px);height:calc(100% + 6px);width:1px;background:var(--line)}
+.beat b{display:block;font:700 1.08rem/1.25 var(--f-body)}
+.beat .d{display:block;color:var(--muted);font-size:.93rem;line-height:1.4;margin-top:2px}
+.frac{font:500 .82rem var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums;padding-top:3px}
+.frac.done{color:var(--accent-text)}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{position:relative;isolation:isolate;overflow:hidden;text-align:left;padding:16px;min-height:112px;display:grid;align-content:space-between;gap:10px;
+  background:linear-gradient(180deg,var(--surface-hi),var(--surface));border:1px solid var(--line);border-radius:var(--r);box-shadow:inset 0 1px 0 var(--hl)}
+.tile b{font:900 1.7rem/.9 var(--f-display);text-transform:uppercase}
+.tile span{color:var(--muted);font-size:.9rem;line-height:1.35}
+.sources{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.src{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:center;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;min-height:60px}
+.src b{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:700 .95rem var(--f-mono);color:var(--accent-ink);background:var(--accent)}
+.fine{color:var(--muted);font-size:.9rem;margin-top:12px;max-width:62ch}
 
-table{border-collapse:collapse;width:100%;min-width:560px}
-th,td{text-align:left;vertical-align:top;padding:10px 12px;border-top:1px solid var(--line)}
-th{font-family:var(--f-display);font-size:.9rem;color:var(--muted);border-top:0}
-.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+/* Tira de película: selector de fases */
+.strip{overflow-x:auto;margin:0 -16px 20px;padding:0 16px;scrollbar-width:none;scroll-snap-type:x proximity}
+.strip::-webkit-scrollbar{display:none}
+.track{position:relative;display:inline-flex;gap:8px;min-width:100%;padding:24px 12px;background:var(--strip);border-radius:6px}
+.track::before,.track::after{content:"";position:absolute;left:0;right:0;height:9px;
+  background:repeating-linear-gradient(90deg,var(--hole) 0 9px,transparent 9px 20px);background-position:6px 0}
+.track::before{top:7px}.track::after{bottom:7px}
+.track .bx{position:absolute;left:0;top:0;width:0;height:0;border-radius:8px;background:var(--accent);z-index:0;pointer-events:none;will-change:transform,width,height;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.frame{position:relative;z-index:1;flex:none;width:78px;height:92px;scroll-snap-align:center;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);
+  display:grid;grid-template-rows:1fr auto auto;justify-items:center;padding:8px 4px 8px;gap:0}
+.frame .fn{align-self:center;font:900 2.4rem/.9 var(--f-display);font-variant-numeric:tabular-nums}
+.frame .fl{font:600 .72rem var(--f-body)}
+.frame .frac{font-size:.7rem;padding-top:1px}
+.frame.done .fn{color:var(--accent-text)}
+.frame[aria-pressed="true"]{background:transparent;border-color:transparent;color:var(--accent-ink)}
+.frame[aria-pressed="true"] .fn,.frame[aria-pressed="true"] .frac{color:var(--accent-ink)}
 
-footer{padding-block:36px 60px;color:var(--muted);font-size:.95rem}
-.reset{font:inherit;font-size:.85rem;background:none;border:1px solid var(--line);color:var(--muted);
-  border-radius:6px;padding:4px 10px;cursor:pointer}
-.reset:hover{border-color:var(--accent);color:var(--fg)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){.prog-fill{transition:none}}
-html{padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}</style>
+/* Teoría */
+.swipe{position:relative;isolation:isolate;touch-action:pan-y;will-change:transform}
+.swipe.dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+.wmw{position:absolute;inset:0 -16px auto -16px;height:360px;overflow:hidden;pointer-events:none;z-index:-1}
+.wm{position:absolute;right:6px;top:-26px;font:900 clamp(15rem,70vw,24rem)/.8 var(--f-display);color:transparent;-webkit-text-stroke:2px var(--line);font-variant-numeric:tabular-nums}
+.ph-head{padding-top:6px}
+.kick{font:500 .75rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text)}
+.ph-title{margin-top:8px;font:900 clamp(2.6rem,12.5vw,4.6rem)/.88 var(--f-display);text-transform:uppercase;letter-spacing:.005em;max-width:12ch}
+.goal{color:var(--muted);max-width:60ch;margin-top:14px}
+.block{padding-block:24px;border-top:1px solid var(--line);margin-top:24px}
+.block:first-of-type{margin-top:22px}
+.block h3{font:700 1.12rem/1.3 var(--f-body)}
+.block h3 small{font:400 .9rem var(--f-body);color:var(--muted)}
+.teach{list-style:none;counter-reset:t;padding:0;margin:14px 0 0;display:grid;gap:0}
+.teach li{counter-increment:t;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:12px 0;border-top:1px solid var(--line-soft);max-width:68ch}
+.teach li:first-child{border-top:0}
+.teach li::before{content:counter(t,decimal-leading-zero);font:500 .78rem var(--f-mono);color:var(--accent-text);padding-top:.32em}
+.teach li b{font-weight:650}
+.steps{list-style:none;counter-reset:s;padding:0;margin:14px 0 0;display:grid;gap:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;max-width:68ch}
+.steps li::before{content:counter(s);font:900 2rem/1 var(--f-display);color:var(--accent-ink);background:var(--accent);border-radius:var(--r-sm);height:44px;display:grid;place-items:center}
+.ts{font:500 .72rem var(--f-mono);text-decoration:none;white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 8px;margin-left:3px;color:var(--accent-text);background:var(--surface-2)}
+.ts::before{content:"";display:inline-block;border:4px solid transparent;border-left:6px solid currentColor;border-right:0;margin-right:5px;vertical-align:0}
+.ts:hover{border-color:var(--accent-text)}
+.note{color:var(--muted);font-size:.93rem;margin-top:20px;max-width:66ch}
+.callout{position:relative;margin-top:34px;padding:22px 18px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--accent-soft);max-width:72ch}
+.callout b.t{position:absolute;top:-13px;left:14px;padding:3px 12px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font:500 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
+.callout.err{background:var(--red-soft)}
+.callout.err b.t{background:var(--c-red);color:#fff}
+.pair{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
 
+/* Hacer */
+.counter{display:flex;align-items:baseline;gap:14px;margin-top:6px}
+.cn{font:900 clamp(4.5rem,24vw,7.5rem)/.8 var(--f-display);font-variant-numeric:tabular-nums}
+.cn i{font-style:normal;color:var(--muted)}
+.cl{font:500 .78rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.hfase{font:700 1.15rem/1.3 var(--f-body);margin-top:14px}
+.segs{display:flex;gap:5px;margin-top:14px}
+.segs i{flex:1;height:10px;border-radius:3px;background:var(--line);transform-origin:50% 100%;transition:background-color .35s}
+.segs i.on{background:var(--accent);animation:tickpop .6s var(--spring) both}
+.takes{margin-top:22px;padding:4px 16px}
+.take{position:relative;overflow:hidden;display:grid;grid-template-columns:28px 24px minmax(0,1fr);gap:12px;padding:16px 0;border-top:1px solid var(--line-soft);cursor:pointer;min-height:56px;align-items:start}
+.take:first-child{border-top:0}
+.take input,.task input{position:absolute;opacity:0;width:1px;height:1px}
+.box{width:28px;height:28px;border-radius:9px;border:2px solid var(--muted);display:block;position:relative;margin-top:1px;transition:background-color .15s,border-color .15s,transform .15s var(--ease)}
+.box::after{content:"";position:absolute;left:8px;top:2px;width:8px;height:14px;border:solid var(--accent-ink);border-width:0 3px 3px 0;transform:rotate(45deg) scale(0);transition:transform .22s var(--ease)}
+.take input:checked + .box,.task input:checked + .box{background:var(--accent);border-color:var(--accent)}
+.take input:checked + .box::after,.task input:checked + .box::after{transform:rotate(45deg) scale(1)}
+.take input:focus-visible + .box,.task input:focus-visible + .box{outline:2px solid var(--accent-text);outline-offset:3px}
+.ti{font:500 .74rem var(--f-mono);color:var(--muted);padding-top:.5em}
+.tx{min-width:0;transition:color .2s}
+.take input:checked ~ .tx,.task input:checked ~ .tx{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.take::after{content:"";position:absolute;inset:0;background:var(--accent-soft);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--spring);z-index:-1}
+.take:has(input:checked)::after{transform:scaleX(1)}
+.task{display:grid;grid-template-columns:28px minmax(0,1fr);gap:14px;cursor:pointer;align-items:start}
+.empty{padding:22px 4px;color:var(--muted)}
+
+/* Escribir */
+.seg{position:relative;display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px;margin:18px 0;max-width:100%}
+.seg .bx{position:absolute;left:0;top:0;width:0;height:0;border-radius:999px;background:var(--accent);z-index:0;pointer-events:none;will-change:transform,width,height}
+.seg button{position:relative;z-index:1;min-height:42px;padding:0 22px;border:0;border-radius:999px;background:none;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{color:var(--accent-ink)}
+.form{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:640px){.form{grid-template-columns:minmax(0,1fr)}}
+.field{display:grid;gap:6px;min-width:0}
+.field.wide{grid-column:1/-1}
+.field label{font:500 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+input[type=text],textarea,select{width:100%;min-height:48px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface-2);color:var(--ink);padding:10px 14px;font:inherit;line-height:1.4}
+input[type=text]:focus,textarea:focus,select:focus{outline:0;border-color:var(--accent-text);box-shadow:0 0 0 3px var(--accent-soft)}
+textarea{resize:none;overflow:hidden;field-sizing:content;min-height:48px}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.85}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 14px}
+.tag{font:600 .72rem var(--f-mono);letter-spacing:.04em;border-radius:999px;padding:4px 11px;display:inline-block}
+.t-plain{color:var(--c-plain);background:var(--plain-soft)}
+.t-blue{color:var(--c-blue);background:var(--blue-soft)}
+.t-red{color:var(--c-red);background:var(--red-soft)}
+.t-yellow{color:var(--c-yellow);background:var(--yel-soft)}
+.rows{display:grid;gap:10px}
+.srow{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px 12px;display:grid;gap:8px}
+.srow .top{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.srow select{width:auto;min-height:40px;font:600 .74rem var(--f-mono);letter-spacing:.04em;border:0;padding:6px 12px;border-radius:999px}
+.srow textarea{font-family:var(--f-mono);font-size:.95rem;line-height:1.55;background:transparent;border-color:var(--line-soft)}
+.srow .acts{display:flex;gap:4px}
+.ico{min-width:40px;min-height:40px;border:1px solid var(--line);background:var(--surface-2);border-radius:var(--r-sm);font-size:1rem;color:var(--muted)}
+.ico:disabled{opacity:.35;cursor:default}
+.adds{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.adds .btn{min-height:42px;padding:0 14px;font-size:.88rem}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}
+.msg{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.fallback{margin-top:12px}
+.fallback textarea{min-height:140px;font-family:var(--f-mono);font-size:.85rem;overflow:auto}
+.idea{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.idea.chosen{background:linear-gradient(180deg,var(--accent-soft),var(--surface));border-color:var(--accent)}
+.idea .why{color:var(--muted);font-size:.93rem}
+.idea .acts{display:flex;gap:8px;flex-wrap:wrap}
+.idea .acts .btn{min-height:42px;padding:0 16px;font-size:.88rem}
+.stamp{position:absolute;right:14px;top:12px;transform:rotate(-7deg);border:2px solid var(--accent-text);color:var(--accent-text);
+  font:900 1rem/1 var(--f-display);letter-spacing:.1em;text-transform:uppercase;padding:4px 9px 3px;border-radius:6px;animation:stampin .5s var(--spring) both}
+@keyframes stampin{0%{transform:rotate(-16deg) scale(1.9);opacity:0}100%{transform:rotate(-7deg) scale(1);opacity:1}}
+.idea .ti2{padding-right:96px}
+.list{display:grid;gap:10px;margin-top:16px}
+.count{font:500 .8rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;margin-top:22px;color:var(--muted)}
+
+/* Plan */
+.weeks{display:grid;gap:12px}
+.week{position:relative;isolation:isolate;overflow:hidden;padding:20px 18px 14px;display:grid;gap:12px;
+  background:linear-gradient(180deg,var(--surface-hi),var(--surface));border:1px solid var(--line);border-radius:var(--r);box-shadow:inset 0 1px 0 var(--hl),var(--shadow)}
+.wk-n{position:absolute;right:-6px;top:-22px;z-index:-1;font:900 11rem/.8 var(--f-display);color:transparent;-webkit-text-stroke:2px var(--line);pointer-events:none}
+.week h3{font:900 2.3rem/.9 var(--f-display);text-transform:uppercase}
+.week p{max-width:46ch}
+.week .res{color:var(--muted);font-size:.93rem}
+.week .fases{display:flex;flex-wrap:wrap;gap:6px}
+.week .fases button{min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);font:500 .78rem var(--f-mono);color:var(--accent-text)}
+.week.done{border-color:var(--accent)}
+.week.done::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--accent-soft)}
+
+/* Barra superior (título que se compacta al desplazarse) */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:15;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;
+  background:var(--surface);border-bottom:1px solid var(--line);font:900 1.3rem/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em;
+  transform:translateY(-110%);opacity:0;pointer-events:none;transition:transform .6s var(--spring),opacity .25s}
+@supports (backdrop-filter:blur(1px)){
+  .topbar{background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+}
+.topbar.on{transform:none;opacity:1}
+@media (min-width:900px){.topbar{left:248px}}
+
+/* Hoja inferior */
+.scrim{position:fixed;inset:0;z-index:40;background:rgba(3,4,7,.62);opacity:0}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-width:560px;margin-inline:auto;background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);border-bottom:0;border-radius:26px 26px 0 0;padding:0 18px calc(22px + env(safe-area-inset-bottom,0px));
+  box-shadow:0 -14px 52px rgba(0,0,0,.45),inset 0 1px 0 var(--hl);transform:translateY(100%);will-change:transform}
+.grab{touch-action:none;cursor:grab;padding:10px 0 16px;display:grid;justify-items:center;gap:12px}
+.grab:active{cursor:grabbing}
+.grab .handle{width:42px;height:5px;border-radius:999px;background:var(--line)}
+.grab h3{justify-self:start;font:900 1.9rem/.9 var(--f-display);text-transform:uppercase}
+.sheet .tools{margin-top:18px}
+
+/* Aviso y confeti */
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:50;max-width:calc(100vw - 32px);
+  background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:600;font-size:.95rem;box-shadow:0 14px 34px rgba(0,0,0,.4)}
+@media (min-width:900px){.toast{bottom:32px}}
+.pt{position:fixed;z-index:95;border-radius:2px;pointer-events:none}
+
+/* Foco de luz del puntero (solo ratón) */
+@media (hover:hover){
+  .beat::before,.tile::before,.week::before,.src::before{content:"";position:absolute;inset:-4px;z-index:-1;opacity:0;transition:opacity .3s;border-radius:var(--r);
+    background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),var(--accent-soft),transparent 70%)}
+  .beat:hover::before,.tile:hover::before,.week:hover::before,.src:hover::before{opacity:1}
+  .next::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .3s;
+    background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 70%)}
+  .next:hover::before{opacity:1}
+}
+
+/* Aparición al desplazarse y paralaje (progresivo, sin JS) */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .teach li,.steps li,.week,.idea,.srow,.src,.tile,.beat{animation:scrollin linear both;animation-timeline:view();animation-range:entry 0% entry 80%}
+    .wm{animation:wmove linear both;animation-timeline:scroll(root block);animation-range:0 900px}
+  }
+}
+@keyframes scrollin{from{opacity:0;transform:translateY(20px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes wmove{from{transform:translateY(0)}to{transform:translateY(120px)}}
+
+@media (prefers-reduced-motion:reduce){
+  button,.topbar,.box,.box::after,.take::after,.bn,.segs i{transition:none}
+  button:active{transform:none}
+  .tg i.on,.segs i.on,.stamp{animation:none}
+}
+</style>
 
 </head>
 <body>
-<div class="wrap">
-
-<header class="top">
-  <h1>Hoja de ruta de contenido</h1>
-  <p class="lead">El método de Christian Belmont ordenado en el orden en que se aplica: de apuntar una idea a publicar y repetir. Cada paso lleva el minuto exacto del vídeo donde lo explica y una lista para marcar.</p>
-  <div class="sources">
-    <a class="pill" href="https://www.youtube.com/watch?v=O6LgWnITTEg" target="_blank" rel="noopener"><b>G</b>Cómo hacer guiones</a>
-    <a class="pill" href="https://www.youtube.com/watch?v=pPur0N8mIqc" target="_blank" rel="noopener"><b>R</b>Grabarte tú solo</a>
-    <a class="pill" href="https://www.youtube.com/watch?v=2yQHDllzpSw" target="_blank" rel="noopener"><b>V</b>Grabar tu aburrida vida</a>
-    <a class="pill" href="https://www.youtube.com/watch?v=jjxu7WMwGF8" target="_blank" rel="noopener"><b>E</b>Edición de vídeo</a>
-    <a class="pill" href="https://www.youtube.com/watch?v=ZeRdjZPXZZE" target="_blank" rel="noopener"><b>T</b>Viajar y trabajar</a>
-  </div>
-</header>
-
-<div class="bar">
-  <div class="bar-in">
-    <nav class="nav" aria-label="Fases">
-      <a href="#mapa">Mapa</a><a href="#f1">1 Ideas</a><a href="#f2">2 Guion</a><a href="#f3">3 Preparar</a><a href="#f4">4 Grabar</a><a href="#f5">5 Editar</a><a href="#f6">6 Publicar</a><a href="#f7">7 Sistema</a><a href="#plan">Plan</a>
-    </nav>
-    <div class="prog" aria-live="polite"><span id="progText">0 / 0</span><span class="prog-track"><span class="prog-fill" id="progFill"></span></span></div>
-  </div>
+<div class="app">
+  <nav class="nav" id="nav" aria-label="Secciones">
+    <span class="ind" id="navInd" aria-hidden="true"></span>
+    <div class="brand">Toma Cero<small>MÉTODO BELMONT</small></div>
+    <button type="button" data-tab="inicio">Inicio</button>
+    <button type="button" data-tab="teoria">Teoría</button>
+    <button type="button" data-tab="hacer">Hacer</button>
+    <button type="button" data-tab="escribir">Escribir</button>
+    <button type="button" data-tab="plan">Plan</button>
+  </nav>
+  <main class="main" id="main">
+    <section id="p-inicio" class="panel" hidden></section>
+    <section id="p-teoria" class="panel" hidden></section>
+    <section id="p-hacer" class="panel" hidden></section>
+    <section id="p-escribir" class="panel" hidden></section>
+    <section id="p-plan" class="panel" hidden></section>
+  </main>
 </div>
 
-<section id="mapa">
-  <div class="sec-head"><span class="num">0</span><h2>El mapa completo</h2></div>
-  <p class="sub">Belmont lo repite en los cuatro vídeos: la edición no se hace en el programa, se hace antes de grabar, en un papel. Todo el sistema consiste en decidir pronto y ejecutar después.</p>
-  <ol class="map">
-    <li><a href="#f1"><span class="n">FASE 1</span><b>Captar ideas</b>Bloc de notas y una pregunta: ¿qué emoción deja esto?</a></li>
-    <li><a href="#f2"><span class="n">FASE 2</span><b>Guion en 4 capas</b>Narrativo, técnico, visual y factores de retención.</a></li>
-    <li><a href="#f3"><span class="n">FASE 3</span><b>Preparar el rodaje</b>Material mínimo y fricción cero.</a></li>
-    <li><a href="#f4"><span class="n">FASE 4</span><b>Grabar</b>Practicar y borrar, luego grabar con plan.</a></li>
-    <li><a href="#f5"><span class="n">FASE 5</span><b>Editar</b>El sándwich: montaje, color, magia, sonido, retoques.</a></li>
-    <li><a href="#f6"><span class="n">FASE 6</span><b>Publicar y revisar</b>Un CTA, un momento «tú» y lectura de comentarios.</a></li>
-    <li><a href="#f7"><span class="n">FASE 7</span><b>Sistema</b>Guion como documento único para delegar y producir en bloque.</a></li>
-  </ol>
-  <div class="yours" style="margin-top:20px"><b>Cómo usarla.</b> Haz la fase 1 y la 2 completas para tus dos primeros vídeos antes de tocar la cámara. Tus marcas se guardan en este navegador. Los recuadros punteados como este son la adaptación a tu caso (Woiomi, turnos, dos vídeos), no lo que dice Belmont.</div>
-</section>
-
-<section id="f1">
-  <div class="sec-head"><span class="num">1</span><h2>Captar ideas</h2></div>
-  <p class="sub">Objetivo de la fase: tener, a final de semana, dos ideas con una emoción clara y una frase que las resuma.</p>
-  <div class="cols">
-    <div class="col">
-      <h3>Lo que enseña Belmont</h3>
-      <ul>
-        <li>Las ideas le salen <b>viviendo experiencias</b>. Dice que sí a todo, aunque sea solo por la anécdota. <a class="ts" data-v="G" data-t="2:43"></a></li>
-        <li>Lo apunta todo en el <b>bloc de notas del móvil</b>; en viaje, su «receptor de ideas» está siempre activo. <a class="ts" data-v="G" data-t="3:00"></a> <a class="ts" data-v="T" data-t="4:49"></a></li>
-        <li>Un buen vídeo tiene que <b>generar algo al terminar</b>: aprendizaje, ganas de compartir, risa. Si no sientes nada, es solo información, y la información sin emoción no se comparte. <a class="ts" data-v="G" data-t="3:23"></a></li>
-        <li>Si tu vida es aburrida, <b>provoca eventos</b>. <a class="ts" data-v="V" data-t="3:31"></a></li>
-        <li>Documenta tu proyecto con sus problemas y fallos: la gente conecta con eso, y de ahí salen los mensajes de clientes potenciales. <a class="ts" data-v="V" data-t="5:59"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>Hazlo tú</h3>
-      <div class="card">
-        <label class="chk"><input type="checkbox"><span>Crear una nota «Ideas» en el móvil. Un único sitio.</span></label>
-        <label class="chk"><input type="checkbox"><span>Cada día, una línea: algo que me ha pasado, costado o decidido.</span></label>
-        <label class="chk"><input type="checkbox"><span>Al cerrar la semana, responder: «¿qué me ha costado y qué estoy haciendo al respecto?»</span></label>
-        <label class="chk"><input type="checkbox"><span>Elegir 2 ideas. Escribir debajo de cada una qué debería sentir o llevarse quien la vea.</span></label>
-        <label class="chk"><input type="checkbox"><span>Pasar la prueba: ¿si no genera nada, es solo información? Descartarla o buscar el ángulo emocional.</span></label>
-      </div>
-    </div>
+<div class="grain" id="grain" aria-hidden="true"></div>
+<div class="topbar" id="topbar" aria-hidden="true"><span id="topTitle">Hoja de ruta</span></div>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <div class="grab" id="sheetGrab"><span class="handle" aria-hidden="true"></span><h3 id="sheetTitle">Nueva idea</h3></div>
+  <div class="form">
+    <div class="field wide"><label for="sh-text">Algo que te pasó, te costó o decidiste</label>
+      <input type="text" id="sh-text" autocomplete="off" placeholder="Una situación concreta, no un consejo"></div>
+    <div class="field wide"><label for="sh-why">Qué debería sentir o llevarse quien la vea</label>
+      <input type="text" id="sh-why" autocomplete="off" placeholder="Aprendizaje, ganas de compartir, risa"></div>
   </div>
-  <div class="yours"><b>Tu caso.</b> Ya tienes candidatas de nuestras conversaciones: «construir algo propio mientras trabajas por turnos», «prepararme tanto que nunca empiezo», «cuando ahorrar tiempo con una herramienta me consume el tiempo». Las dos primeras son tus vídeos 1 y 2.</div>
-  <div class="mistake"><b>Error típico.</b> Apuntar datos o consejos sin una situación detrás. Sin anécdota no hay guion narrativo.</div>
-</section>
-
-<section id="f2">
-  <div class="sec-head"><span class="num">2</span><h2>Guion en cuatro capas</h2></div>
-  <p class="sub">Es el corazón del método. Se escriben en este orden y cada capa responde a una pregunta distinta. Para vídeos de redes, Belmont las junta en un solo documento.</p>
-
-  <div class="cols">
-    <div class="col">
-      <h3>Capa 1 · Narrativo — ¿qué historia cuento?</h3>
-      <ul>
-        <li>Se escribe <b>a mano, en una libreta, en un sitio tranquilo</b> (parque, terraza). <a class="ts" data-v="G" data-t="3:44"></a></li>
-        <li>Pones la historia tal cual te viene a la cabeza, <b>sin pensar en cómo se grabará ni se editará</b>. «Primero la historia, luego la técnica». <a class="ts" data-v="G" data-t="3:53"></a></li>
-        <li>Su ejemplo: quiso mudarse de piso, un hombre intentó estafarle y él le siguió el rollo hasta el final. <a class="ts" data-v="G" data-t="3:14"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>Capa 2 · Técnico — ¿qué pasa en cada segundo?</h3>
-      <ul>
-        <li>Aquí ya usas el <b>ordenador</b>. Decides efectos, transiciones, música y recursos <b>antes de grabar</b>. <a class="ts" data-v="G" data-t="4:05"></a></li>
-        <li>Sobre cada frase escribes <b>el plano</b>; debajo de cada escena, <b>el efecto</b>. <a class="ts" data-v="G" data-t="4:33"></a></li>
-        <li>Código de color para saber de un vistazo quién habla (ver plantilla). <a class="ts" data-v="G" data-t="4:52"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>Capa 3 · Imaginario visual — ¿cómo imagino que se ve?</h3>
-      <ul>
-        <li>Storyboard, o un <b>vídeo cutre con el móvil</b> de cómo imaginas el plano. No tiene que ser perfecto. <a class="ts" data-v="G" data-t="5:07"></a></li>
-        <li>Lo que hablas a cámara lo puede improvisar (luz, composición). <b>La voz en off sí va pensada</b> de antemano. <a class="ts" data-v="G" data-t="5:38"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>Capa 4 · Factores de retención — ¿qué funciona y qué no?</h3>
-      <ul>
-        <li><b>Hook</b>: los primeros segundos. Debe crear una pregunta que solo se resuelve viendo el vídeo entero. <a class="ts" data-v="G" data-t="6:12"></a></li>
-        <li><b>Necesidad</b>: por qué alguien tiene que ver esto ahora; qué problema resuelve o qué curiosidad genera. <a class="ts" data-v="G" data-t="6:27"></a></li>
-        <li><b>CTA</b>: qué quieres que haga al terminar (comentar, compartir, ver otro vídeo, suscribirse). <a class="ts" data-v="G" data-t="6:33"></a></li>
-      </ul>
-    </div>
-  </div>
-
-  <h3 style="margin-top:34px">Plantilla de guion técnico (copia y rellena)</h3>
-  <div class="script" role="table" aria-label="Plantilla de guion técnico">
-    <div class="row head-row"><span class="tag">CABECERA</span><span class="txt">VÍDEO: ______ · DURACIÓN: 45–60 s · EMOCIÓN FINAL: ______</span></div>
-    <div class="row head-row"><span class="tag">RETENCIÓN</span><span class="txt">HOOK: ______ · NECESIDAD: ______ · CTA (una sola): ______</span></div>
-    <div class="row"><span class="tag t-white">PLANO</span><span class="txt">Primer plano, a cámara, luz de ventana</span></div>
-    <div class="row"><span class="tag t-blue">AZUL · TÚ</span><span class="txt">Lo que dices mirando a cámara.</span></div>
-    <div class="row"><span class="tag t-white">EFECTO</span><span class="txt">Zoom suave / texto en pantalla / SFX de clic</span></div>
-    <div class="row"><span class="tag t-white">PLANO</span><span class="txt">B-roll: libreta abierta con la lista</span></div>
-    <div class="row"><span class="tag t-yellow">AMARILLO · VOZ OFF</span><span class="txt">Lo que dices sin salir en imagen.</span></div>
-    <div class="row"><span class="tag t-red">ROJO · OTRO</span><span class="txt">Lo que dice otra persona (si la hay).</span></div>
-    <div class="row"><span class="tag t-white">MOMENTO TÚ</span><span class="txt">Un comentario improvisado que no está en el guion (ver fase 6).</span></div>
-  </div>
-  <p class="src" style="margin-top:10px">Leyenda de Belmont: tus diálogos a cámara en azul, los de otras personas en rojo, la voz en off en amarillo, y los detalles y tipos de plano en blanco. El guion de montaje (ordenar por días de rodaje) lo reserva para producciones grandes y no lo usa en vídeos de redes. <a class="ts" data-v="G" data-t="8:16"></a></p>
-
-  <h3 style="margin-top:30px">Hazlo tú</h3>
-  <div class="card">
-    <label class="chk"><input type="checkbox"><span><b>Vídeo 1:</b> escribir el guion narrativo a mano, sin pensar en la técnica.</span></label>
-    <label class="chk"><input type="checkbox"><span><b>Vídeo 2:</b> escribir el guion narrativo a mano.</span></label>
-    <label class="chk"><input type="checkbox"><span>Pasar ambos a guion técnico con la plantilla (plano arriba, efecto debajo, colores).</span></label>
-    <label class="chk"><input type="checkbox"><span>Rellenar hook, necesidad y CTA de cada vídeo en una línea cada uno.</span></label>
-    <label class="chk"><input type="checkbox"><span>Anotar qué partes son voz en off y pensarlas con más detalle; dejar la parte a cámara más abierta.</span></label>
-    <label class="chk"><input type="checkbox"><span>Reservar en cada guion un hueco para el «momento tú» improvisado.</span></label>
-  </div>
-  <div class="yours"><b>Tu caso.</b> Si ya tienes los dos guiones hablados que redactamos, el paso nuevo es añadir la capa técnica: el plano de cada frase y qué enseñas en pantalla (perfil vacío de Woiomi, libreta, pestañas abiertas).</div>
-  <div class="mistake"><b>Error típico.</b> Escribir ya pensando en el programa de edición, o pulir cada palabra. Belmont lo dice expresamente: no siempre hay que hacer un vídeo viral ni tener el guion perfecto, optimizado palabra por palabra. <a class="ts" data-v="G" data-t="7:01"></a></div>
-</section>
-
-<section id="f3">
-  <div class="sec-head"><span class="num">3</span><h2>Preparar el rodaje</h2></div>
-  <p class="sub">Objetivo: que grabar sea tan fácil que no haya excusa. Belmont insiste en que el equipo es secundario.</p>
-  <div class="cols">
-    <div class="col">
-      <h3>Lo que enseña Belmont</h3>
-      <ul>
-        <li>Con el móvil que tienes puedes empezar. La mayoría del contenido vertical está grabado con móvil. <a class="ts" data-v="R" data-t="2:06"></a></li>
-        <li>Cuatro cosas: <b>cámara, trípode, luz y micro</b>. Cualquier trípode sirve; la luz natural vale. <a class="ts" data-v="R" data-t="2:12"></a></li>
-        <li><b>El audio importa más que la imagen.</b> Si no tienes micro, Adobe Podcast limpia el audio. <a class="ts" data-v="R" data-t="4:19"></a></li>
-        <li><b>Reduce la fricción</b>: trípode y luz siempre montados, cámara con el micro puesto cuando se pueda. <a class="ts" data-v="R" data-t="8:20"></a></li>
-        <li>Pantalla abatible o app del móvil para verte mientras grabas. <a class="ts" data-v="R" data-t="14:11"></a></li>
-        <li>Para el contenido de la vida normal, el equipo es irrelevante: lo que cuenta es grabarla. <a class="ts" data-v="V" data-t="14:05"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>Hazlo tú</h3>
-      <div class="card">
-        <label class="chk"><input type="checkbox"><span>Elegir un rincón fijo de grabación con buena luz natural.</span></label>
-        <label class="chk"><input type="checkbox"><span>Dejar el trípode montado y el móvil a mano, sin tener que recolocar nada.</span></label>
-        <label class="chk"><input type="checkbox"><span>Probar el audio: grabar 10 s y escucharlo con auriculares.</span></label>
-        <label class="chk"><input type="checkbox"><span>Pasar el guion técnico al móvil para leerlo y tacharlo mientras grabas.</span></label>
-        <label class="chk"><input type="checkbox"><span>Decidir qué B-roll necesitas (lista corta sacada del guion).</span></label>
-      </div>
-    </div>
-  </div>
-  <div class="yours"><b>Tu caso.</b> No compres nada nuevo antes de grabar el vídeo 1. Si después el audio o la luz limitan, ya sabrás cuál arreglar primero: el audio.</div>
-</section>
-
-<section id="f4">
-  <div class="sec-head"><span class="num">4</span><h2>Grabar</h2></div>
-  <p class="sub">Dos etapas. La primera es práctica que se tira; la segunda es el rodaje real.</p>
-
-  <h3>Etapa A · Calentamiento que se borra</h3>
-  <ol class="steps">
-    <li><div><b>Yapping.</b> Coloca la cámara y habla sin guion, de lo que sea: qué te ha pasado esta mañana, una anécdota, una opinión. Sirve para soltarte. <a class="ts" data-v="V" data-t="10:55"></a></div></li>
-    <li><div><b>Plano recurso.</b> Graba B-roll haciendo cosas sin hablar: trabajar, comer, ir al gimnasio. Pierdes la vergüenza a grabar en público. <a class="ts" data-v="V" data-t="11:21"></a></div></li>
-    <li><div><b>Bórralo todo.</b> Clic derecho, papelera. Lo grabado la primera vez casi seguro no vale: vas cohibido, proyectas mal la voz y sueles grabar 7 minutos contando lo que desayunaste. Era práctica. <a class="ts" data-v="V" data-t="12:05"></a></div></li>
-    <li><div><b>Apunta el plan del día</b> en la libreta, sin pasarte con los tiempos, y a grabar con cabeza. <a class="ts" data-v="V" data-t="13:20"></a></div></li>
-  </ol>
-
-  <div class="cols" style="margin-top:28px">
-    <div class="col">
-      <h3>Etapa B · Reglas del rodaje real</h3>
-      <ul>
-        <li><b>A-roll en casa, B-roll fuera.</b> Grabar sin hablar a cámara da menos vergüenza. <a class="ts" data-v="R" data-t="5:57"></a></li>
-        <li><b>La cámara es un amigo.</b> Habla como a una persona normal; da más vergüenza el «hola amigos de YouTube» impostado. <a class="ts" data-v="R" data-t="6:20"></a></li>
-        <li><b>Proyecta la voz</b> hacia la cámara aunque el micro esté cerca. <a class="ts" data-v="R" data-t="6:55"></a></li>
-        <li><b>Free trials:</b> los primeros segundos no cuentan. <b>La intro se graba al final</b>, cuando estás más metido. <a class="ts" data-v="R" data-t="7:09"></a></li>
-        <li><b>No le importas a nadie</b> mientras grabas en la calle; no hay público mirando. <a class="ts" data-v="R" data-t="7:32"></a></li>
-        <li>Con el guion en el móvil, <b>ve tachando lo grabado</b>. <a class="ts" data-v="R" data-t="14:06"></a></li>
-        <li>Si lo edita otra persona, <b>dale indicaciones a cámara</b> para que no haya pérdidas. <a class="ts" data-v="R" data-t="14:20"></a></li>
-        <li>Graba B-roll sin guion, pero <b>con una temática</b>. Grabar por grabar no le funcionó. <a class="ts" data-v="T" data-t="5:21"></a></li>
-        <li>Lo más importante al grabar es <b>disfrutar</b>. <a class="ts" data-v="R" data-t="14:41"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>Hazlo tú</h3>
-      <div class="card">
-        <label class="chk"><input type="checkbox"><span>Sesión de calentamiento: 10–15 min de yapping + B-roll de tu día. Luego borrar.</span></label>
-        <label class="chk"><input type="checkbox"><span>Rodaje, en este orden: B-roll → cuerpo del vídeo → <b>intro al final</b>.</span></label>
-        <label class="chk"><input type="checkbox"><span>Hacer 2 o 3 tomas de la intro y quedarte con la última (free trials).</span></label>
-        <label class="chk"><input type="checkbox"><span>Grabar el «momento tú» improvisado, aunque parezca que sobra.</span></label>
-        <label class="chk"><input type="checkbox"><span>Comprobar el audio de la primera toma antes de seguir grabando.</span></label>
-        <label class="chk"><input type="checkbox"><span>Tachar el guion al terminar cada bloque. Revisar que no falta ningún plano antes de recoger.</span></label>
-      </div>
-    </div>
-  </div>
-  <div class="yours"><b>Tu caso.</b> Tu bloqueo es hablar a cámara, no la técnica. La sesión de calentamiento que se borra es la parte que más te va a ayudar: nadie la ve, así que no tienes nada que demostrar.</div>
-  <div class="mistake"><b>Error típico.</b> Grabar un único plano de 7 minutos, o acumular B-roll sin idea y luego no saber dónde encajarlo en el montaje.</div>
-</section>
-
-<section id="f5">
-  <div class="sec-head"><span class="num">5</span><h2>Editar: el sándwich</h2></div>
-  <p class="sub">Belmont ordena la edición en cuatro bloques, como un sándwich. Lo importante es el orden: el montaje primero, el brillo después. Tú ya dominas la herramienta; lo que te da este método es la secuencia.</p>
-
-  <h3>A · Montaje: el esqueleto <span class="src">(pan, jamón, queso, pan)</span> <a class="ts" data-v="E" data-t="2:17"></a></h3>
-  <ol class="steps">
-    <li><div><b>Pan.</b> Importar todos los clips al proyecto.</div></li>
-    <li><div><b>Jamón.</b> Recortar las partes buenas de cada clip y ponerlas en el timeline, sin orden todavía.</div></li>
-    <li><div><b>Queso.</b> Ordenar todo: dónde va el cierre, la intro, la voz en off.</div></li>
-    <li><div><b>Pan.</b> Pulir: recortar silencios y dejar el espacio necesario para efectos y transiciones, que van después.</div></li>
-  </ol>
-  <p class="src">Atajos que recomienda aprender: guardar, copiar y pegar atributos, seleccionar todo, J/L para velocidad, y las teclas Q y W para cortar «el antes» y «el después» del cursor. Pertenecen a su programa; busca el equivalente en el tuyo. <a class="ts" data-v="E" data-t="3:27"></a></p>
-
-  <div class="cols" style="margin-top:28px">
-    <div class="col">
-      <h3>B · Color</h3>
-      <ul>
-        <li>Graba en <b>perfil plano o logarítmico</b> y aplica el archivo de conversión (LUT) de la marca de tu cámara o móvil. <a class="ts" data-v="E" data-t="4:49"></a></li>
-        <li>Para entrenar el ojo: <b>pon una escena de película al lado</b> e intenta imitar su color. <a class="ts" data-v="E" data-t="7:24"></a></li>
-        <li>Elige una referencia coherente con tu escena: no copies al Joker de noche para un vídeo a las 12 de la mañana. <a class="ts" data-v="E" data-t="7:41"></a></li>
-        <li>Parámetros básicos: exposición, contraste, temperatura, curvas, HSL y ruedas de color. Experimenta. <a class="ts" data-v="E" data-t="7:59"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>C · La magia</h3>
-      <ul>
-        <li><b>Primero los efectos que ya estaban en el guion</b> (transiciones, VFX, lettering). Son lo que más tiempo lleva: quítatelos pronto. <a class="ts" data-v="E" data-t="8:54"></a></li>
-        <li>Después, <b>margen para improvisar</b>: probar un efecto guardado, meter lettering donde no lo habías pensado, cambiar el orden de planos. <a class="ts" data-v="E" data-t="9:36"></a></li>
-        <li>Es al gusto: hay vídeos de clientes sin ninguna de esas tres cosas. <a class="ts" data-v="E" data-t="9:25"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>D · Música y efectos de sonido</h3>
-      <ul>
-        <li>Lo importante no es lo épica que sea la canción, sino <b>los silencios</b>. Retienes más cuando paras la música antes de algo importante. <a class="ts" data-v="E" data-t="11:06"></a></li>
-        <li>Para entrenar el oído, mira más cine y series.</li>
-        <li><b>SFX</b> para dar punch: si lo que se ve no va acompañado de lo que se oye, el vídeo queda «bien» pero no «pro». <a class="ts" data-v="E" data-t="11:37"></a></li>
-        <li>Bancos de sonido y música: Epidemic Sound, Artlist y similares.</li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>E · Retoques y revisión</h3>
-      <ul>
-        <li>Capa de grano, glow o VHS si el vídeo lo pide. <a class="ts" data-v="E" data-t="12:40"></a></li>
-        <li>Subtítulos si el vídeo los necesita.</li>
-        <li><b>Revisar antes de exportar</b>: siempre hay florituras a medias. <a class="ts" data-v="E" data-t="12:52"></a></li>
-      </ul>
-    </div>
-  </div>
-
-  <h3 style="margin-top:30px">Hazlo tú</h3>
-  <div class="card">
-    <label class="chk"><input type="checkbox"><span>Montaje completo sin ningún efecto: solo cortes y orden.</span></label>
-    <label class="chk"><input type="checkbox"><span>Silencios recortados y huecos dejados donde irán los efectos.</span></label>
-    <label class="chk"><input type="checkbox"><span>Color con una referencia puesta al lado.</span></label>
-    <label class="chk"><input type="checkbox"><span>Efectos del guion técnico aplicados.</span></label>
-    <label class="chk"><input type="checkbox"><span>Una cosa improvisada añadida (efecto, lettering o cambio de orden).</span></label>
-    <label class="chk"><input type="checkbox"><span>Música con al menos un silencio intencionado + SFX en los momentos clave.</span></label>
-    <label class="chk"><input type="checkbox"><span>Subtítulos y revisión final completa antes de exportar.</span></label>
-  </div>
-  <div class="yours"><b>Tu caso.</b> Tu riesgo es sobre-editar tu propio vídeo. El orden del sándwich te protege: nada de efectos hasta que el montaje esté cerrado. Y si tu guion técnico está bien, tomas pocas decisiones aquí.</div>
-</section>
-
-<section id="f6">
-  <div class="sec-head"><span class="num">6</span><h2>Publicar y revisar</h2></div>
-  <p class="sub">La marca personal no está en la técnica. Belmont propone un vídeo específico sobre marca personal que aún no ha publicado; mientras tanto, esto es lo que ya dice.</p>
-  <div class="cols">
-    <div class="col">
-      <h3>Lo que enseña Belmont</h3>
-      <ul>
-        <li><b>El momento «tú».</b> En todos sus vídeos hay un momento improvisado que no está en el guion: llamar «José Miguel» al espectador, enseñar una gorra, mencionar un vídeo anterior. Técnicamente sobra, pero hace que la gente sienta que te conoce. <a class="ts" data-v="G" data-t="7:17"></a></li>
-        <li>Si no conectas el vídeo con tu universo, <b>la gente se queda con el vídeo y no contigo</b>. <a class="ts" data-v="G" data-t="7:50"></a></li>
-        <li>Hay vídeos que sabe que no serán virales, pero los hace para su comunidad. <a class="ts" data-v="G" data-t="8:03"></a></li>
-        <li><b>Un CTA claro</b> por vídeo, por ejemplo «comenta la palabra X». Sirve además para medir qué quiere ver la gente. <a class="ts" data-v="E" data-t="13:36"></a> <a class="ts" data-v="T" data-t="15:47"></a></li>
-        <li>La gente conecta con cosas que no son la idea principal: la camiseta, el sitio, un recuerdo. Da igual de qué hables; importa más cómo lo cuentas. <a class="ts" data-v="V" data-t="8:30"></a></li>
-        <li>Pregunta a tu audiencia qué quiere ver (historias de Instagram, comentarios). <a class="ts" data-v="E" data-t="0:55"></a></li>
-        <li>Muestra quién eres y por qué haces lo que haces. <a class="ts" data-v="V" data-t="7:23"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>Hazlo tú</h3>
-      <div class="card">
-        <label class="chk"><input type="checkbox"><span>Publicar con un único CTA, escrito en el guion desde la fase 2.</span></label>
-        <label class="chk"><input type="checkbox"><span>Comprobar que el vídeo tiene su «momento tú» (una frase, un objeto, una referencia).</span></label>
-        <label class="chk"><input type="checkbox"><span>A los 2–3 días, leer todos los comentarios y anotar los que no tratan de la idea principal.</span></label>
-        <label class="chk"><input type="checkbox"><span>Revisión de 20 min: qué conectó, qué no, qué quieren que cuentes.</span></label>
-        <label class="chk"><input type="checkbox"><span>Elegir las dos ideas siguientes a partir de esos comentarios y de tu nota de ideas.</span></label>
-      </div>
-    </div>
-  </div>
-  <div class="yours"><b>Tu caso.</b> Tu «momento tú» puede ser algo propio de tus turnos o de tu forma de hablar: lo que ya haces sin darte cuenta. El vídeo de marca personal de Belmont aún no ha salido; cuando lo publique lo añado como fase propia.</div>
-</section>
-
-<section id="f7">
-  <div class="sec-head"><span class="num">7</span><h2>Sistema para repetir y delegar</h2></div>
-  <p class="sub">Esta fase es para cuando ya hayas publicado los dos primeros. Es lo que convierte un vídeo suelto en una rutina sostenible, y lo que Belmont usa con sus clientes.</p>
-  <div class="cols">
-    <div class="col">
-      <h3>Lo que enseña Belmont</h3>
-      <ul>
-        <li><b>El guion es el traspaso al editor.</b> Si está bien hecho, cualquiera que sepa editar puede hacerlo: en el guion están todos los detalles. <a class="ts" data-v="T" data-t="10:58"></a></li>
-        <li>Carpetas ordenadas y cada frase o clip del guion en Notion <b>enlazado al vídeo en Drive</b>. <a class="ts" data-v="T" data-t="11:16"></a></li>
-        <li><b>Edición creativa vs técnica.</b> La creativa dirige las decisiones (estilo, música, color, lettering, efectos); la técnica solo ejecuta. <a class="ts" data-v="T" data-t="11:29"></a></li>
-        <li><b>Producción en bloque.</b> Estrategia anual, ideas aprobadas, guiones escritos, y una o dos horas de rodaje dan contenido para un mes. <a class="ts" data-v="T" data-t="10:08"></a></li>
-        <li><b>Reparte el día por energía:</b> guionizar solo y en silencio, grabar según surja, editar cuando nadie interrumpe. <a class="ts" data-v="T" data-t="12:26"></a></li>
-        <li>Es honesto con el rendimiento: fuera de su habitación rinde menos y no pasa nada. <a class="ts" data-v="T" data-t="13:30"></a></li>
-        <li>La grabación es lo único que no se puede hacer en remoto; lo demás se dirige a distancia. <a class="ts" data-v="T" data-t="9:14"></a></li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>Hazlo tú</h3>
-      <div class="card">
-        <label class="chk"><input type="checkbox"><span>Crear una carpeta por vídeo: guion, B-roll, A-roll, exportado.</span></label>
-        <label class="chk"><input type="checkbox"><span>Pasar el guion técnico a un documento (Notion o Drive) con cada frase enlazada a su clip.</span></label>
-        <label class="chk"><input type="checkbox"><span>Separar en el guion las decisiones creativas (estilo, música, color) de las instrucciones técnicas.</span></label>
-        <label class="chk"><input type="checkbox"><span>Elegir tu franja de guionizar, de grabar y de editar según tus turnos.</span></label>
-        <label class="chk"><input type="checkbox"><span>Escribir 3–4 guiones de golpe y grabar todos en una sesión.</span></label>
-      </div>
-    </div>
-  </div>
-  <div class="yours"><b>Tu caso.</b> Aquí conectan tu marca personal y Woiomi: el mismo documento de guion sirve para tu cuenta y para delegar la edición técnica de un cliente. Es el paso que te quita horas cuando tengas varios proyectos.</div>
-</section>
-
-<section id="plan">
-  <div class="sec-head"><span class="num">P</span><h2>Plan de tres semanas</h2></div>
-  <p class="sub">Para tus dos primeros vídeos, con tus turnos como límite. La regla: no se publica hasta tener los dos terminados.</p>
-  <div class="tbl">
-    <table>
-      <thead><tr><th>Semana</th><th>Qué haces</th><th>Fases</th><th>Resultado</th></tr></thead>
-      <tbody>
-        <tr><td><b>1</b></td><td>Nota de ideas. Guion narrativo y técnico de los dos vídeos. Preparar el rincón de grabación. Una sesión de calentamiento que se borra.</td><td>1 · 2 · 3 · 4A</td><td>Dos guiones técnicos cerrados.</td></tr>
-        <tr><td><b>2</b></td><td>Rodaje de ambos (B-roll, cuerpo, intro al final). Montaje en bruto del vídeo 1.</td><td>4B · 5A</td><td>Todo el material grabado.</td></tr>
-        <tr><td><b>3</b></td><td>Terminar color, efectos y sonido de ambos. Revisión final. Publicar, leer comentarios y elegir las dos ideas siguientes.</td><td>5B–E · 6</td><td>Dos vídeos publicados y una revisión hecha.</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="yours" style="margin-top:20px"><b>Qué decidir antes de empezar.</b> Tres cosas que ya hablamos y que conviene dejar escritas: el ángulo (construir algo propio mientras trabajas por turnos), la serie (una por semana, con el mismo formato) y un objetivo medible (por ejemplo, un cliente nuevo desde tu contenido en 90 días). Los seguidores quedan como medida secundaria.</div>
-</section>
-
-<footer>
-  <p><b>Sobre las fuentes.</b> Esta hoja se ha montado a partir de las transcripciones automáticas de los cinco vídeos, que pueden fallar en nombres propios. No se ha analizado la imagen, así que lo que dice cada vídeo es fiable y lo visual (cortes, ritmo) queda fuera. Los enlaces con minuto abren el vídeo en ese punto.</p>
-  <p><button class="reset" id="reset" type="button">Borrar mis marcas</button></p>
-</footer>
-
+  <div class="tools"><button type="button" class="btn primary" data-act="sheet-save">Añadir idea</button>
+    <button type="button" class="btn quiet" data-act="sheet-close">Cancelar</button></div>
 </div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
 (function(){
-  var IDS={G:"O6LgWnITTEg",R:"pPur0N8mIqc",V:"2yQHDllzpSw",E:"jjxu7WMwGF8",T:"ZeRdjZPXZZE"};
-  document.querySelectorAll("a.ts").forEach(function(a){
-    var v=a.getAttribute("data-v"),t=a.getAttribute("data-t"),p=t.split(":"),s=parseInt(p[0],10)*60+parseInt(p[1],10);
-    a.textContent=v+" "+t;
-    a.href="https://www.youtube.com/watch?v="+IDS[v]+"&t="+s+"s";
-    a.target="_blank"; a.rel="noopener";
-  });
+"use strict";
 
-  var boxes=Array.prototype.slice.call(document.querySelectorAll(".chk input"));
-  var KEY="hoja-ruta-contenido-v1";
-  var saved={};
-  try{saved=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){}
-  function paint(){
-    var done=boxes.filter(function(b){return b.checked;}).length;
-    document.getElementById("progText").textContent=done+" / "+boxes.length;
-    document.getElementById("progFill").style.width=(boxes.length?done/boxes.length*100:0)+"%";
+/* ---------- Contenido ---------- */
+var IDS={G:"O6LgWnITTEg",R:"pPur0N8mIqc",V:"2yQHDllzpSw",E:"jjxu7WMwGF8",T:"ZeRdjZPXZZE"};
+var VIDEOS=[
+  ["G","Cómo hacer guiones"],["R","Grabarte tú solo"],["V","Grabar tu aburrida vida"],["E","Edición de vídeo"],["T","Viajar y trabajar"]
+];
+
+var PHASES=[
+{id:1,name:"Captar ideas",short:"Ideas",
+ blurb:"Bloc de notas y una pregunta: ¿qué emoción deja esto?",
+ goal:"Objetivo de la fase: tener, a final de semana, dos ideas con una emoción clara y una frase que las resuma.",
+ blocks:[
+  {t:"list",h:"Lo que enseña Belmont",items:[
+   "Las ideas le salen <b>viviendo experiencias</b>. Dice que sí a todo, aunque sea solo por la anécdota. {G 2:43}",
+   "Lo apunta todo en el <b>bloc de notas del móvil</b>; en viaje, su «receptor de ideas» está siempre activo. {G 3:00} {T 4:49}",
+   "Un buen vídeo tiene que <b>generar algo al terminar</b>: aprendizaje, ganas de compartir, risa. Si no sientes nada, es solo información, y la información sin emoción no se comparte. {G 3:23}",
+   "Si tu vida es aburrida, <b>provoca eventos</b>. {V 3:31}",
+   "Documenta tu proyecto con sus problemas y fallos: la gente conecta con eso, y de ahí salen los mensajes de clientes potenciales. {V 5:59}"]}
+ ],
+ yours:"Ya tienes candidatas de nuestras conversaciones: «construir algo propio mientras trabajas por turnos», «prepararme tanto que nunca empiezo», «cuando ahorrar tiempo con una herramienta me consume el tiempo». Las dos primeras son tus vídeos 1 y 2.",
+ mistake:"Apuntar datos o consejos sin una situación detrás. Sin anécdota no hay guion narrativo.",
+ todo:[
+  "Crear una nota «Ideas» en el móvil. Un único sitio.",
+  "Cada día, una línea: algo que me ha pasado, costado o decidido.",
+  "Al cerrar la semana, responder: «¿qué me ha costado y qué estoy haciendo al respecto?»",
+  "Elegir 2 ideas. Escribir debajo de cada una qué debería sentir o llevarse quien la vea.",
+  "Pasar la prueba: si no genera nada, es solo información. Descartarla o buscar el ángulo emocional."]},
+
+{id:2,name:"Guion en cuatro capas",short:"Guion",
+ blurb:"Narrativo, técnico, visual y factores de retención.",
+ goal:"Es el corazón del método. Cada capa responde a una pregunta distinta y se escriben en este orden. Para vídeos de redes, Belmont las junta en un solo documento.",
+ blocks:[
+  {t:"list",h:"Capa 1. Narrativo: ¿qué historia cuento?",items:[
+   "Se escribe <b>a mano, en una libreta, en un sitio tranquilo</b> (parque, terraza). {G 3:44}",
+   "Pones la historia tal cual te viene a la cabeza, <b>sin pensar en cómo se grabará ni se editará</b>. «Primero la historia, luego la técnica». {G 3:53}",
+   "Su ejemplo: quiso mudarse de piso, un hombre intentó estafarle y él le siguió el rollo hasta el final. {G 3:14}"]},
+  {t:"list",h:"Capa 2. Técnico: ¿qué pasa en cada segundo?",items:[
+   "Aquí ya usas el <b>ordenador</b>. Decides efectos, transiciones, música y recursos <b>antes de grabar</b>. {G 4:05}",
+   "Sobre cada frase escribes <b>el plano</b>; debajo de cada escena, <b>el efecto</b>. {G 4:33}",
+   "Código de color para saber de un vistazo quién habla (míralo en la pestaña Escribir). {G 4:52}"]},
+  {t:"list",h:"Capa 3. Imaginario visual: ¿cómo imagino que se ve?",items:[
+   "Storyboard, o un <b>vídeo cutre con el móvil</b> de cómo imaginas el plano. No tiene que ser perfecto. {G 5:07}",
+   "Lo que hablas a cámara lo puede improvisar (luz, composición). <b>La voz en off sí va pensada</b> de antemano. {G 5:38}"]},
+  {t:"list",h:"Capa 4. Factores de retención: ¿qué funciona y qué no?",items:[
+   "<b>Hook</b>: los primeros segundos. Debe crear una pregunta que solo se resuelve viendo el vídeo entero. {G 6:12}",
+   "<b>Necesidad</b>: por qué alguien tiene que ver esto ahora; qué problema resuelve o qué curiosidad genera. {G 6:27}",
+   "<b>CTA</b>: qué quieres que haga al terminar (comentar, compartir, ver otro vídeo, suscribirse). {G 6:33}"]},
+  {t:"note",text:"Leyenda de Belmont: tus diálogos a cámara en azul, los de otras personas en rojo, la voz en off en amarillo, y los detalles y tipos de plano en blanco. El guion de montaje (ordenar por días de rodaje) lo reserva para producciones grandes y no lo usa en vídeos de redes. {G 8:16}"},
+  {t:"link",label:"Abrir la plantilla de guion",tab:"escribir",sub:"guion"}
+ ],
+ yours:"Si ya tienes los dos guiones hablados que redactamos, el paso nuevo es añadir la capa técnica: el plano de cada frase y qué enseñas en pantalla (perfil vacío de Woiomi, libreta, pestañas abiertas).",
+ mistake:"Escribir ya pensando en el programa de edición, o pulir cada palabra. Belmont lo dice expresamente: no siempre hay que hacer un vídeo viral ni tener el guion perfecto, optimizado palabra por palabra. {G 7:01}",
+ todo:[
+  "<b>Vídeo 1:</b> escribir el guion narrativo a mano, sin pensar en la técnica.",
+  "<b>Vídeo 2:</b> escribir el guion narrativo a mano.",
+  "Pasar ambos a guion técnico con la plantilla (plano arriba, efecto debajo, colores).",
+  "Rellenar hook, necesidad y CTA de cada vídeo en una línea cada uno.",
+  "Anotar qué partes son voz en off y pensarlas con más detalle; dejar la parte a cámara más abierta.",
+  "Reservar en cada guion un hueco para el «momento tú» improvisado."]},
+
+{id:3,name:"Preparar el rodaje",short:"Preparar",
+ blurb:"Material mínimo y fricción cero.",
+ goal:"Objetivo: que grabar sea tan fácil que no haya excusa. Belmont insiste en que el equipo es secundario.",
+ blocks:[
+  {t:"list",h:"Lo que enseña Belmont",items:[
+   "Con el móvil que tienes puedes empezar. La mayoría del contenido vertical está grabado con móvil. {R 2:06}",
+   "Cuatro cosas: <b>cámara, trípode, luz y micro</b>. Cualquier trípode sirve; la luz natural vale. {R 2:12}",
+   "<b>El audio importa más que la imagen.</b> Si no tienes micro, Adobe Podcast limpia el audio. {R 4:19}",
+   "<b>Reduce la fricción</b>: trípode y luz siempre montados, cámara con el micro puesto cuando se pueda. {R 8:20}",
+   "Pantalla abatible o app del móvil para verte mientras grabas. {R 14:11}",
+   "Para el contenido de la vida normal, el equipo es irrelevante: lo que cuenta es grabarla. {V 14:05}"]}
+ ],
+ yours:"No compres nada nuevo antes de grabar el vídeo 1. Si después el audio o la luz limitan, ya sabrás cuál arreglar primero: el audio.",
+ mistake:null,
+ todo:[
+  "Elegir un rincón fijo de grabación con buena luz natural.",
+  "Dejar el trípode montado y el móvil a mano, sin tener que recolocar nada.",
+  "Probar el audio: grabar 10 s y escucharlo con auriculares.",
+  "Pasar el guion técnico al móvil para leerlo y tacharlo mientras grabas.",
+  "Decidir qué B-roll necesitas (lista corta sacada del guion)."]},
+
+{id:4,name:"Grabar",short:"Grabar",
+ blurb:"Practicar y borrar, luego grabar con plan.",
+ goal:"Dos etapas. La primera es práctica que se tira; la segunda es el rodaje real.",
+ blocks:[
+  {t:"steps",h:"Etapa A. Calentamiento que se borra",items:[
+   "<b>Yapping.</b> Coloca la cámara y habla sin guion, de lo que sea: qué te ha pasado esta mañana, una anécdota, una opinión. Sirve para soltarte. {V 10:55}",
+   "<b>Plano recurso.</b> Graba B-roll haciendo cosas sin hablar: trabajar, comer, ir al gimnasio. Pierdes la vergüenza a grabar en público. {V 11:21}",
+   "<b>Bórralo todo.</b> Lo grabado la primera vez casi seguro no vale: vas cohibido, proyectas mal la voz y sueles grabar 7 minutos contando lo que desayunaste. Era práctica. {V 12:05}",
+   "<b>Apunta el plan del día</b> en la libreta, sin pasarte con los tiempos, y a grabar con cabeza. {V 13:20}"]},
+  {t:"list",h:"Etapa B. Reglas del rodaje real",items:[
+   "<b>A-roll en casa, B-roll fuera.</b> Grabar sin hablar a cámara da menos vergüenza. {R 5:57}",
+   "<b>La cámara es un amigo.</b> Habla como a una persona normal; da más vergüenza el «hola amigos de YouTube» impostado. {R 6:20}",
+   "<b>Proyecta la voz</b> hacia la cámara aunque el micro esté cerca. {R 6:55}",
+   "<b>Free trials:</b> los primeros segundos no cuentan. <b>La intro se graba al final</b>, cuando estás más metido. {R 7:09}",
+   "<b>No le importas a nadie</b> mientras grabas en la calle; no hay público mirando. {R 7:32}",
+   "Con el guion en el móvil, <b>ve tachando lo grabado</b>. {R 14:06}",
+   "Si lo edita otra persona, <b>dale indicaciones a cámara</b> para que no haya pérdidas. {R 14:20}",
+   "Graba B-roll sin guion, pero <b>con una temática</b>. Grabar por grabar no le funcionó. {T 5:21}",
+   "Lo más importante al grabar es <b>disfrutar</b>. {R 14:41}"]}
+ ],
+ yours:"Tu bloqueo es hablar a cámara, no la técnica. La sesión de calentamiento que se borra es la parte que más te va a ayudar: nadie la ve, así que no tienes nada que demostrar.",
+ mistake:"Grabar un único plano de 7 minutos, o acumular B-roll sin idea y luego no saber dónde encajarlo en el montaje.",
+ todo:[
+  "Sesión de calentamiento: 10 a 15 min de yapping + B-roll de tu día. Luego borrar.",
+  "Rodaje, en este orden: B-roll, cuerpo del vídeo, <b>intro al final</b>.",
+  "Hacer 2 o 3 tomas de la intro y quedarte con la última (free trials).",
+  "Grabar el «momento tú» improvisado, aunque parezca que sobra.",
+  "Comprobar el audio de la primera toma antes de seguir grabando.",
+  "Tachar el guion al terminar cada bloque. Revisar que no falta ningún plano antes de recoger."]},
+
+{id:5,name:"Editar: el sándwich",short:"Editar",
+ blurb:"El sándwich: montaje, color, magia, sonido, retoques.",
+ goal:"Belmont ordena la edición en cuatro bloques, como un sándwich. Lo importante es el orden: el montaje primero, el brillo después. Tú ya dominas la herramienta; lo que te da este método es la secuencia.",
+ blocks:[
+  {t:"steps",h:"A. Montaje: el esqueleto <small>(pan, jamón, queso, pan)</small> {E 2:17}",items:[
+   "<b>Pan.</b> Importar todos los clips al proyecto.",
+   "<b>Jamón.</b> Recortar las partes buenas de cada clip y ponerlas en el timeline, sin orden todavía.",
+   "<b>Queso.</b> Ordenar todo: dónde va el cierre, la intro, la voz en off.",
+   "<b>Pan.</b> Pulir: recortar silencios y dejar el espacio necesario para efectos y transiciones, que van después."]},
+  {t:"note",text:"Atajos que recomienda aprender: guardar, copiar y pegar atributos, seleccionar todo, J/L para velocidad, y las teclas Q y W para cortar «el antes» y «el después» del cursor. Pertenecen a su programa; busca el equivalente en el tuyo. {E 3:27}"},
+  {t:"list",h:"B. Color",items:[
+   "Graba en <b>perfil plano o logarítmico</b> y aplica el archivo de conversión (LUT) de la marca de tu cámara o móvil. {E 4:49}",
+   "Para entrenar el ojo: <b>pon una escena de película al lado</b> e intenta imitar su color. {E 7:24}",
+   "Elige una referencia coherente con tu escena: no copies al Joker de noche para un vídeo a las 12 de la mañana. {E 7:41}",
+   "Parámetros básicos: exposición, contraste, temperatura, curvas, HSL y ruedas de color. Experimenta. {E 7:59}"]},
+  {t:"list",h:"C. La magia",items:[
+   "<b>Primero los efectos que ya estaban en el guion</b> (transiciones, VFX, lettering). Son lo que más tiempo lleva: quítatelos pronto. {E 8:54}",
+   "Después, <b>margen para improvisar</b>: probar un efecto guardado, meter lettering donde no lo habías pensado, cambiar el orden de planos. {E 9:36}",
+   "Es al gusto: hay vídeos de clientes sin ninguna de esas tres cosas. {E 9:25}"]},
+  {t:"list",h:"D. Música y efectos de sonido",items:[
+   "Lo importante no es lo épica que sea la canción, sino <b>los silencios</b>. Retienes más cuando paras la música antes de algo importante. {E 11:06}",
+   "Para entrenar el oído, mira más cine y series.",
+   "<b>SFX</b> para dar punch: si lo que se ve no va acompañado de lo que se oye, el vídeo queda «bien» pero no «pro». {E 11:37}",
+   "Bancos de sonido y música: Epidemic Sound, Artlist y similares."]},
+  {t:"list",h:"E. Retoques y revisión",items:[
+   "Capa de grano, glow o VHS si el vídeo lo pide. {E 12:40}",
+   "Subtítulos si el vídeo los necesita.",
+   "<b>Revisar antes de exportar</b>: siempre hay florituras a medias. {E 12:52}"]}
+ ],
+ yours:"Tu riesgo es sobre-editar tu propio vídeo. El orden del sándwich te protege: nada de efectos hasta que el montaje esté cerrado. Y si tu guion técnico está bien, tomas pocas decisiones aquí.",
+ mistake:null,
+ todo:[
+  "Montaje completo sin ningún efecto: solo cortes y orden.",
+  "Silencios recortados y huecos dejados donde irán los efectos.",
+  "Color con una referencia puesta al lado.",
+  "Efectos del guion técnico aplicados.",
+  "Una cosa improvisada añadida (efecto, lettering o cambio de orden).",
+  "Música con al menos un silencio intencionado + SFX en los momentos clave.",
+  "Subtítulos y revisión final completa antes de exportar."]},
+
+{id:6,name:"Publicar y revisar",short:"Publicar",
+ blurb:"Un CTA, un momento «tú» y lectura de comentarios.",
+ goal:"La marca personal no está en la técnica. Belmont propone un vídeo específico sobre marca personal que aún no ha publicado; mientras tanto, esto es lo que ya dice.",
+ blocks:[
+  {t:"list",h:"Lo que enseña Belmont",items:[
+   "<b>El momento «tú».</b> En todos sus vídeos hay un momento improvisado que no está en el guion: llamar «José Miguel» al espectador, enseñar una gorra, mencionar un vídeo anterior. Técnicamente sobra, pero hace que la gente sienta que te conoce. {G 7:17}",
+   "Si no conectas el vídeo con tu universo, <b>la gente se queda con el vídeo y no contigo</b>. {G 7:50}",
+   "Hay vídeos que sabe que no serán virales, pero los hace para su comunidad. {G 8:03}",
+   "<b>Un CTA claro</b> por vídeo, por ejemplo «comenta la palabra X». Sirve además para medir qué quiere ver la gente. {E 13:36} {T 15:47}",
+   "La gente conecta con cosas que no son la idea principal: la camiseta, el sitio, un recuerdo. Da igual de qué hables; importa más cómo lo cuentas. {V 8:30}",
+   "Pregunta a tu audiencia qué quiere ver (historias de Instagram, comentarios). {E 0:55}",
+   "Muestra quién eres y por qué haces lo que haces. {V 7:23}"]}
+ ],
+ yours:"Tu «momento tú» puede ser algo propio de tus turnos o de tu forma de hablar: lo que ya haces sin darte cuenta. El vídeo de marca personal de Belmont aún no ha salido; cuando lo publique lo añado como fase propia.",
+ mistake:null,
+ todo:[
+  "Publicar con un único CTA, escrito en el guion desde la fase 2.",
+  "Comprobar que el vídeo tiene su «momento tú» (una frase, un objeto, una referencia).",
+  "A los 2 o 3 días, leer todos los comentarios y anotar los que no tratan de la idea principal.",
+  "Revisión de 20 min: qué conectó, qué no, qué quieren que cuentes.",
+  "Elegir las dos ideas siguientes a partir de esos comentarios y de tu nota de ideas."]},
+
+{id:7,name:"Sistema para repetir y delegar",short:"Sistema",
+ blurb:"Guion como documento único para delegar y producir en bloque.",
+ goal:"Esta fase es para cuando ya hayas publicado los dos primeros. Es lo que convierte un vídeo suelto en una rutina sostenible, y lo que Belmont usa con sus clientes.",
+ blocks:[
+  {t:"list",h:"Lo que enseña Belmont",items:[
+   "<b>El guion es el traspaso al editor.</b> Si está bien hecho, cualquiera que sepa editar puede hacerlo: en el guion están todos los detalles. {T 10:58}",
+   "Carpetas ordenadas y cada frase o clip del guion en Notion <b>enlazado al vídeo en Drive</b>. {T 11:16}",
+   "<b>Edición creativa vs técnica.</b> La creativa dirige las decisiones (estilo, música, color, lettering, efectos); la técnica solo ejecuta. {T 11:29}",
+   "<b>Producción en bloque.</b> Estrategia anual, ideas aprobadas, guiones escritos, y una o dos horas de rodaje dan contenido para un mes. {T 10:08}",
+   "<b>Reparte el día por energía:</b> guionizar solo y en silencio, grabar según surja, editar cuando nadie interrumpe. {T 12:26}",
+   "Es honesto con el rendimiento: fuera de su habitación rinde menos y no pasa nada. {T 13:30}",
+   "La grabación es lo único que no se puede hacer en remoto; lo demás se dirige a distancia. {T 9:14}"]}
+ ],
+ yours:"Aquí conectan tu marca personal y Woiomi: el mismo documento de guion sirve para tu cuenta y para delegar la edición técnica de un cliente. Es el paso que te quita horas cuando tengas varios proyectos.",
+ mistake:null,
+ todo:[
+  "Crear una carpeta por vídeo: guion, B-roll, A-roll, exportado.",
+  "Pasar el guion técnico a un documento (Notion o Drive) con cada frase enlazada a su clip.",
+  "Separar en el guion las decisiones creativas (estilo, música, color) de las instrucciones técnicas.",
+  "Elegir tu franja de guionizar, de grabar y de editar según tus turnos.",
+  "Escribir 3 o 4 guiones de golpe y grabar todos en una sesión."]}
+];
+
+var WEEKS=[
+ {n:1,what:"Nota de ideas. Guion narrativo y técnico de los dos vídeos. Preparar el rincón de grabación. Una sesión de calentamiento que se borra.",fases:[1,2,3,4],res:"Dos guiones técnicos cerrados."},
+ {n:2,what:"Rodaje de ambos (B-roll, cuerpo, intro al final). Montaje en bruto del vídeo 1.",fases:[4,5],res:"Todo el material grabado."},
+ {n:3,what:"Terminar color, efectos y sonido de ambos. Revisión final. Publicar, leer comentarios y elegir las dos ideas siguientes.",fases:[5,6],res:"Dos vídeos publicados y una revisión hecha."}
+];
+
+var ROWTYPES={
+ plano:{label:"PLANO",cls:"t-plain",ph:"Primer plano, a cámara, luz de ventana"},
+ tu:{label:"TÚ · AZUL",cls:"t-blue",ph:"Lo que dices mirando a cámara"},
+ voz:{label:"VOZ EN OFF · AMARILLO",cls:"t-yellow",ph:"Lo que dices sin salir en imagen"},
+ otro:{label:"OTRO · ROJO",cls:"t-red",ph:"Lo que dice otra persona, si la hay"},
+ efecto:{label:"EFECTO",cls:"t-plain",ph:"Zoom suave, texto en pantalla, SFX de clic"}
+};
+var ROWORDER=["plano","tu","voz","otro","efecto"];
+
+/* ---------- Estado ---------- */
+var KEY="hoja-ruta-contenido-v2";
+var seq=1;
+function newRow(type){return {id:"r"+(seq++),type:type,text:""};}
+function newScript(){
+  return {title:"",dur:"45 a 60 s",emo:"",hook:"",need:"",cta:"",you:"",
+    rows:[newRow("plano"),newRow("tu"),newRow("efecto"),newRow("plano"),newRow("voz")]};
+}
+function defaults(){
+  return {
+    ui:{tab:"inicio",phase:1,sub:"ideas",video:1},
+    checks:{},
+    weeks:{},
+    ideas:[
+      {id:"i1",text:"Construir algo propio mientras trabajas por turnos",why:"",chosen:true},
+      {id:"i2",text:"Prepararme tanto que nunca empiezo",why:"",chosen:true},
+      {id:"i3",text:"Cuando ahorrar tiempo con una herramienta me consume el tiempo",why:"",chosen:false}
+    ],
+    scripts:{1:newScript(),2:newScript()},
+    plan:{angulo:"Construir algo propio mientras trabajas por turnos",serie:"Una por semana, con el mismo formato",objetivo:"Un cliente nuevo desde tu contenido en 90 días"}
+  };
+}
+var S=defaults();
+try{
+  var raw=localStorage.getItem(KEY);
+  if(raw){
+    var o=JSON.parse(raw);
+    ["ui","checks","weeks","ideas","scripts","plan"].forEach(function(k){if(o&&o[k]!==undefined)S[k]=o[k];});
+    var mx=0;
+    [1,2].forEach(function(v){((S.scripts[v]||{}).rows||[]).forEach(function(r){var n=parseInt(String(r.id).slice(1),10);if(n>mx)mx=n;});});
+    seq=mx+1;
   }
-  function save(){
-    var o={};boxes.forEach(function(b,i){if(b.checked)o[i]=1;});
-    try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
+}catch(e){}
+var saveTimer=0;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(function(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}},150);
+}
+
+/* ---------- Utilidades ---------- */
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function rich(s){
+  return s.replace(/\{([GRVET]) (\d+:\d\d)\}/g,function(m,v,t){
+    var p=t.split(":"),sec=parseInt(p[0],10)*60+parseInt(p[1],10);
+    return '<a class="ts" href="https://www.youtube.com/watch?v='+IDS[v]+'&amp;t='+sec+'s" target="_blank" rel="noopener">'+v+' '+t+'</a>';
+  });
+}
+function phaseById(id){return PHASES.filter(function(p){return p.id===id;})[0];}
+function ckey(p,i){return "f"+p+"-"+i;}
+function phaseDone(p){var n=0;phaseById(p).todo.forEach(function(_,i){if(S.checks[ckey(p,i)])n++;});return n;}
+function phaseTotal(p){return phaseById(p).todo.length;}
+function allDone(){var n=0;PHASES.forEach(function(p){n+=phaseDone(p.id);});return n;}
+function allTotal(){var n=0;PHASES.forEach(function(p){n+=p.todo.length;});return n;}
+function fracText(p){return phaseDone(p)+"/"+phaseTotal(p);}
+
+/* ---------- Vistas ---------- */
+function nextStep(){
+  for(var i=0;i<PHASES.length;i++){
+    var p=PHASES[i];
+    for(var j=0;j<p.todo.length;j++){if(!S.checks[ckey(p.id,j)])return {p:p,i:j};}
   }
-  boxes.forEach(function(b,i){
-    b.checked=!!saved[i];
-    b.addEventListener("change",function(){save();paint();});
+  return null;
+}
+function currentPhase(){var n=nextStep();return n?n.p.id:PHASES.length;}
+function ticksHTML(){
+  var h='<div class="ticks">',n=0;
+  PHASES.forEach(function(p){
+    h+='<button type="button" class="tg" data-go="hacer" data-phase="'+p.id+'" aria-label="Ir a la fase '+p.id+': '+esc(p.name)+'">';
+    p.todo.forEach(function(_,i){
+      var k=ckey(p.id,i);
+      h+='<i data-tick="'+k+'" style="--i:'+(n++)+'"'+(S.checks[k]?' class="on"':'')+'></i>';
+    });
+    h+='</button>';
   });
-  document.getElementById("reset").addEventListener("click",function(){
-    boxes.forEach(function(b){b.checked=false;});save();paint();
+  return h+'</div>';
+}
+function vInicio(){
+  var nx=nextStep(),h='';
+  h+='<div class="slate-wrap"><div class="slate" id="slate" aria-label="Claqueta de la producción">'+
+     '<div class="stick" id="stick" aria-hidden="true"></div>'+
+     '<div class="board"><small>Producción</small><h1 class="sl-title">Hoja de ruta de contenido</h1>'+
+     '<div class="sl-grid"><div><small>Método</small><b>Belmont</b></div>'+
+     '<div><small>Fase</small><b><span data-count="phase">'+currentPhase()+'</span>/'+PHASES.length+'</b></div>'+
+     '<div><small>Tomas</small><b data-count="all">'+allDone()+'/'+allTotal()+'</b></div></div>'+
+     ticksHTML()+'</div></div></div>';
+  h+='<p class="manifesto">La edición no se hace en el programa. Se hace <mark>antes de grabar, en un papel</mark>.</p>';
+  if(nx){
+    h+='<section class="next"><div class="nx-n" aria-hidden="true">'+nx.p.id+'</div><div><small>Siguiente toma · fase '+nx.p.id+'</small>'+
+       '<p>'+rich(nx.p.todo[nx.i])+'</p>'+
+       '<button type="button" class="btn" data-go="hacer" data-phase="'+nx.p.id+'">Ir a la lista</button></div></section>';
+  }else{
+    h+='<section class="next"><div class="nx-n" aria-hidden="true">7</div><div><small>Todo marcado</small>'+
+       '<p>Has completado todas las listas. Revisa comentarios y elige las dos ideas siguientes.</p>'+
+       '<button type="button" class="btn" data-go="escribir" data-sub="ideas">Ver mis ideas</button></div></section>';
+  }
+  h+='<div class="sect"><h3>Las siete fases</h3><ol class="story">';
+  PHASES.forEach(function(p){
+    var dn=phaseDone(p.id)===phaseTotal(p.id);
+    h+='<li><button type="button" class="beat" data-go="teoria" data-phase="'+p.id+'"><span class="bn'+(dn?' done':'')+'" data-beat="p'+p.id+'">'+p.id+'</span>'+
+       '<span><b>'+esc(p.name)+'</b><span class="d">'+esc(p.blurb)+'</span></span>'+
+       '<span class="frac'+(dn?' done':'')+'" data-count="p'+p.id+'">'+fracText(p.id)+'</span></button></li>';
   });
-  paint();
+  h+='</ol></div>';
+  h+='<div class="sect"><h3>Cómo usarla</h3><p>Haz la fase 1 y la 2 completas para tus dos primeros vídeos antes de tocar la cámara.</p>'+
+     '<div class="tiles" style="margin-top:14px">'+
+     '<button type="button" class="tile" data-go="teoria"><b>Teoría</b><span>Qué enseña cada vídeo, con el minuto exacto.</span></button>'+
+     '<button type="button" class="tile" data-go="hacer"><b>Hacer</b><span>Una lista por fase para marcar lo hecho.</span></button>'+
+     '<button type="button" class="tile" data-go="escribir"><b>Escribir</b><span>Tus ideas y el guion técnico de cada vídeo.</span></button>'+
+     '<button type="button" class="tile" data-go="plan"><b>Plan</b><span>Las tres semanas y lo que decidir antes.</span></button>'+
+     '</div>'+
+     '<p class="fine">Tus marcas y textos se guardan en este navegador y en este dispositivo. Los recuadros «Tu caso» son la adaptación a tu situación (Woiomi, turnos, dos vídeos), no lo que dice Belmont.</p></div>';
+  h+='<div class="sect"><h3>Los cinco vídeos</h3><div class="sources">';
+  VIDEOS.forEach(function(v){
+    h+='<a class="src" href="https://www.youtube.com/watch?v='+IDS[v[0]]+'" target="_blank" rel="noopener"><b>'+v[0]+'</b><span>'+esc(v[1])+'</span></a>';
+  });
+  h+='</div><p class="fine">Montada a partir de las transcripciones automáticas, que pueden fallar en nombres propios. No se analizó la imagen, así que lo visual (cortes, ritmo) queda fuera. Los enlaces con minuto abren el vídeo en ese punto.</p></div>';
+  h+='<div class="sect"><button type="button" class="btn quiet" data-act="reset">Borrar mis marcas y textos</button><span class="msg" id="resetMsg"></span></div>';
+  return h;
+}
+
+function chipsHTML(){
+  var h='<div class="strip"><div class="track" role="group" aria-label="Fase" data-box="chips"><span class="bx" aria-hidden="true"></span>';
+  PHASES.forEach(function(p){
+    var dn=phaseDone(p.id)===phaseTotal(p.id);
+    h+='<button type="button" class="chip frame'+(dn?' done':'')+'" data-frame="p'+p.id+'" data-phase="'+p.id+'" aria-pressed="'+(S.ui.phase===p.id)+'" aria-label="Fase '+p.id+': '+esc(p.name)+'">'+
+       '<span class="fn">'+p.id+'</span><span class="fl">'+esc(p.short)+'</span><span class="frac" data-count="p'+p.id+'">'+fracText(p.id)+'</span></button>';
+  });
+  return h+'</div></div>';
+}
+function vTeoria(){
+  var p=phaseById(S.ui.phase),h='';
+  h+='<header class="panel-head"><h2 class="big-h">Teoría</h2><p>Lo que enseña cada vídeo, con el minuto exacto. Desliza para cambiar de fase.</p></header>';
+  h+=chipsHTML();
+  h+='<div class="swipe"><div class="wmw" aria-hidden="true"><span class="wm">'+p.id+'</span></div>';
+  h+='<div class="ph-head"><div class="kick">Fase '+p.id+' de '+PHASES.length+'</div><h2 class="ph-title">'+esc(p.name)+'</h2><p class="goal">'+rich(p.goal)+'</p></div>';
+  p.blocks.forEach(function(b){
+    if(b.t==="note"){h+='<p class="note">'+rich(b.text)+'</p>';return;}
+    if(b.t==="link"){h+='<div class="pair"><button type="button" class="btn primary" data-go="escribir" data-sub="'+b.sub+'">'+esc(b.label)+'</button></div>';return;}
+    h+='<section class="block"><h3>'+rich(b.h)+'</h3><'+(b.t==="steps"?'ol class="steps"':'ul class="teach"')+'>';
+    b.items.forEach(function(it){h+='<li><div>'+rich(it)+'</div></li>';});
+    h+='</'+(b.t==="steps"?'ol':'ul')+'></section>';
+  });
+  h+='<div class="callout"><b class="t">Tu caso</b>'+rich(p.yours)+'</div>';
+  if(p.mistake)h+='<div class="callout err"><b class="t">Error típico</b>'+rich(p.mistake)+'</div>';
+  h+='<div class="pair"><button type="button" class="btn primary" data-go="hacer" data-phase="'+p.id+'">Marcar la lista de la fase '+p.id+'</button>';
+  if(p.id<PHASES.length)h+='<button type="button" class="btn" data-phase="'+(p.id+1)+'">Siguiente fase</button>';
+  h+='</div></div>';
+  return h;
+}
+
+function vHacer(){
+  var p=phaseById(S.ui.phase),d=phaseDone(p.id),t=phaseTotal(p.id),h='';
+  h+='<header class="panel-head"><h2 class="big-h">Hacer</h2><p>Una lista por fase. Marca solo lo que de verdad has hecho.</p></header>';
+  h+=chipsHTML();
+  h+='<div class="swipe"><div class="wmw" aria-hidden="true"><span class="wm">'+p.id+'</span></div>';
+  h+='<div class="counter"><div class="cn"><span data-count="p'+p.id+'d">'+d+'</span><i>/</i>'+t+'</div><div class="cl">tomas<br>hechas</div></div>';
+  h+='<h3 class="hfase">Fase '+p.id+': '+esc(p.name)+'</h3>';
+  h+='<div class="segs" aria-hidden="true">';
+  p.todo.forEach(function(_,i){var k=ckey(p.id,i);h+='<i data-tick="'+k+'"'+(S.checks[k]?' class="on"':'')+'></i>';});
+  h+='</div>';
+  h+='<div class="takes surf">';
+  p.todo.forEach(function(tx,i){
+    var k=ckey(p.id,i);
+    h+='<label class="take"><input type="checkbox" data-key="'+k+'"'+(S.checks[k]?' checked':'')+'><span class="box"></span>'+
+       '<span class="ti">'+(i<9?'0':'')+(i+1)+'</span><span class="tx">'+rich(tx)+'</span></label>';
+  });
+  h+='</div>';
+  h+='<div class="callout"><b class="t">Tu caso</b>'+rich(p.yours)+'</div>';
+  h+='<div class="pair"><button type="button" class="btn" data-go="teoria" data-phase="'+p.id+'">Ver la teoría de esta fase</button>';
+  if(p.id===2)h+='<button type="button" class="btn primary" data-go="escribir" data-sub="guion">Escribir el guion</button>';
+  if(p.id===1)h+='<button type="button" class="btn primary" data-go="escribir" data-sub="ideas">Mis ideas</button>';
+  h+='</div></div>';
+  return h;
+}
+
+function vEscribir(){
+  var h='<header class="panel-head"><h2 class="big-h">Escribir</h2><p>Las ideas de la semana y el guion técnico de cada vídeo.</p></header>';
+  h+='<div class="seg" role="group" aria-label="Qué escribir" data-box="sub"><span class="bx" aria-hidden="true"></span><button type="button" data-sub="ideas" aria-pressed="'+(S.ui.sub==="ideas")+'">Ideas</button>'+
+     '<button type="button" data-sub="guion" aria-pressed="'+(S.ui.sub==="guion")+'">Guion</button></div>';
+  h+=S.ui.sub==="ideas"?vIdeas():vGuion();
+  return h;
+}
+function vIdeas(){
+  var ch=S.ideas.filter(function(i){return i.chosen;}).length,h='';
+  h+='<div class="tools" style="margin-top:0"><button type="button" class="btn primary" data-act="sheet-open">Nueva idea</button></div>';
+  h+='<p class="count" id="ideaCount">'+ch+' elegidas de 2 para tus dos primeros vídeos</p>';
+  if(!S.ideas.length){
+    h+='<p class="empty">Aún no hay ideas. Apunta la primera: una cosa que te pasó esta semana.</p>';
+  }else{
+    h+='<div class="list">';
+    S.ideas.forEach(function(i){
+      h+='<div class="idea'+(i.chosen?' chosen':'')+'" data-id="'+i.id+'">'+(i.chosen?'<span class="stamp">Elegida</span>':'')+
+         '<div class="ti2"><b>'+esc(i.text)+'</b></div>'+
+         (i.why?'<div class="why">'+esc(i.why)+'</div>':'<div class="why">Sin emoción anotada todavía.</div>')+
+         '<div class="acts"><button type="button" class="btn'+(i.chosen?' primary':'')+'" data-act="idea-pick" data-id="'+i.id+'">'+(i.chosen?'Quitar elección':'Elegir')+'</button>'+
+         '<button type="button" class="btn quiet" data-act="idea-del" data-id="'+i.id+'">Borrar</button></div></div>';
+    });
+    h+='</div>';
+  }
+  return h;
+}
+function vGuion(){
+  var v=S.ui.video,sc=S.scripts[v],h='';
+  h+='<div class="seg" role="group" aria-label="Vídeo" data-box="video" style="margin-top:0"><span class="bx" aria-hidden="true"></span><button type="button" data-video="1" aria-pressed="'+(v===1)+'">Vídeo 1</button>'+
+     '<button type="button" data-video="2" aria-pressed="'+(v===2)+'">Vídeo 2</button></div>';
+  h+='<div class="form">';
+  [["title","Título de trabajo"],["dur","Duración"],["emo","Emoción final"],["hook","Hook (primeros segundos)"],["need","Necesidad (por qué verlo ahora)"],["cta","CTA (una sola)"]].forEach(function(f){
+    h+='<div class="field"><label for="g'+v+'-'+f[0]+'">'+f[1]+'</label><input type="text" id="g'+v+'-'+f[0]+'" data-f="'+f[0]+'" value="'+esc(sc[f[0]])+'" autocomplete="off"></div>';
+  });
+  h+='<div class="field wide"><label for="g'+v+'-you">Momento «tú» improvisado</label><input type="text" id="g'+v+'-you" data-f="you" value="'+esc(sc.you)+'" autocomplete="off" placeholder="Una frase, un objeto o una referencia que no está en el guion"></div>';
+  h+='</div>';
+  h+='<div class="legend" aria-label="Leyenda de colores de Belmont"><span class="tag t-blue">AZUL: tú a cámara</span><span class="tag t-yellow">AMARILLO: voz en off</span><span class="tag t-red">ROJO: otra persona</span><span class="tag t-plain">BLANCO: plano y efecto</span></div>';
+  h+='<div class="rows">';
+  sc.rows.forEach(function(r,idx){
+    var ty=ROWTYPES[r.type]||ROWTYPES.plano;
+    h+='<div class="srow"><div class="top"><select class="'+ty.cls+'" data-row="'+r.id+'" data-f="type" aria-label="Tipo de línea">';
+    ROWORDER.forEach(function(k){h+='<option value="'+k+'"'+(k===r.type?' selected':'')+'>'+ROWTYPES[k].label+'</option>';});
+    h+='</select><div class="acts">'+
+       '<button type="button" class="ico" data-act="row-up" data-row="'+r.id+'" aria-label="Subir"'+(idx===0?' disabled':'')+'>↑</button>'+
+       '<button type="button" class="ico" data-act="row-down" data-row="'+r.id+'" aria-label="Bajar"'+(idx===sc.rows.length-1?' disabled':'')+'>↓</button>'+
+       '<button type="button" class="ico" data-act="row-del" data-row="'+r.id+'" aria-label="Quitar línea">×</button></div></div>'+
+       '<textarea rows="1" id="g'+v+'-'+r.id+'" data-row="'+r.id+'" data-f="text" aria-label="'+esc(ty.label)+'" placeholder="'+esc(ty.ph)+'">'+esc(r.text)+'</textarea></div>';
+  });
+  h+='</div>';
+  h+='<div class="adds" aria-label="Añadir línea">';
+  ROWORDER.forEach(function(k){h+='<button type="button" class="btn" data-act="row-add" data-type="'+k+'">+ '+ROWTYPES[k].label.split(" ")[0]+'</button>';});
+  h+='</div>';
+  h+='<div class="tools"><button type="button" class="btn primary" data-act="copy">Copiar guion</button>'+
+     '<button type="button" class="btn quiet" data-act="clear">Vaciar este guion</button><span class="msg" id="copyMsg" role="status"></span></div>';
+  h+='<div class="fallback" id="fallback" hidden><label class="msg" for="fbText">Copia el texto a mano:</label><textarea id="fbText" readonly></textarea></div>';
+  return h;
+}
+
+function vPlan(){
+  var h='<header class="panel-head"><h2 class="big-h">Plan</h2><p>Tres semanas para tus dos primeros vídeos, con tus turnos como límite. La regla: no se publica hasta tener los dos terminados.</p></header>';
+  h+='<div class="weeks">';
+  WEEKS.forEach(function(w){
+    var on=!!S.weeks[w.n];
+    h+='<article class="week'+(on?' done':'')+'"><span class="wk-n" aria-hidden="true">'+w.n+'</span><h3>Semana '+w.n+'</h3><p>'+esc(w.what)+'</p><div class="fases">';
+    w.fases.forEach(function(f){h+='<button type="button" data-go="teoria" data-phase="'+f+'" aria-label="Ver fase '+f+'">Fase '+f+'</button>';});
+    h+='</div><p class="res">Resultado: '+esc(w.res)+'</p>'+
+       '<label class="task" style="padding-top:4px"><input type="checkbox" data-week="'+w.n+'"'+(on?' checked':'')+'><span class="box"></span><span class="tx">Semana cerrada</span></label></article>';
+  });
+  h+='</div>';
+  h+='<div class="sect"><h3>Antes de empezar</h3><p class="fine" style="margin-top:0">Tres cosas que ya hablamos y conviene dejar escritas. Los seguidores quedan como medida secundaria.</p><div class="form" style="margin-top:14px">'+
+     '<div class="field wide"><label for="pl-angulo">Ángulo</label><input type="text" id="pl-angulo" data-plan="angulo" value="'+esc(S.plan.angulo)+'" autocomplete="off"></div>'+
+     '<div class="field wide"><label for="pl-serie">Serie</label><input type="text" id="pl-serie" data-plan="serie" value="'+esc(S.plan.serie)+'" autocomplete="off"></div>'+
+     '<div class="field wide"><label for="pl-obj">Objetivo medible</label><input type="text" id="pl-obj" data-plan="objetivo" value="'+esc(S.plan.objetivo)+'" autocomplete="off"></div>'+
+     '</div></div>';
+  return h;
+}
+
+/* ---------- Movimiento: muelles (damping + response, como Apple) ---------- */
+var RM=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+/* Muelle como curva CSS linear(): sirve para WAAPI y transiciones. Mismo muelle en toda la app. */
+function makeSpring(damping,response){
+  var w=2*Math.PI/response,dt=1/120,settle=0,t,i,pts=[];
+  function f(t){
+    if(damping>=1)return 1-(1+w*t)*Math.exp(-w*t);
+    var wd=w*Math.sqrt(1-damping*damping),z=damping*w;
+    return 1-Math.exp(-z*t)*(Math.cos(wd*t)+(z/wd)*Math.sin(wd*t));
+  }
+  for(t=0;t<4;t+=dt){if(Math.abs(1-f(t))>0.002)settle=t;}
+  settle+=dt;
+  var n=Math.min(56,Math.max(8,Math.ceil(settle*60)));
+  for(i=0;i<=n;i++)pts.push(+f(settle*i/n).toFixed(4));
+  pts[n]=1;
+  return {css:"linear("+pts.join(",")+")",ms:Math.round(settle*1000)};
+}
+var LIN_OK=!!(window.CSS&&CSS.supports&&CSS.supports("animation-timing-function","linear(0,1)"));
+var SP_UI=makeSpring(1,.38);      /* sin rebote: entradas y cambios de estado */
+var SP_POP=makeSpring(.6,.4);     /* con rebote: solo cuando hay un gesto o una confirmación */
+function ease(sp){return LIN_OK?sp.css:"cubic-bezier(.16,1,.3,1)";}
+document.documentElement.style.setProperty("--spring",ease(SP_UI));
+function anim(el,frames,opt){if(RM||!el||!el.animate)return null;return el.animate(frames,opt);}
+
+/* Muelle interrumpible: se puede redirigir en pleno vuelo y conserva la velocidad. */
+function Spring(v,damping,response,on){
+  var w=2*Math.PI/response;
+  this.v=v;this.t=v;this.vel=0;this.k=w*w;this.c=2*damping*w;this.on=on;this.raf=0;this.done=null;
+}
+Spring.prototype.stop=function(){if(this.raf){cancelAnimationFrame(this.raf);this.raf=0;}};
+Spring.prototype.set=function(v){this.stop();this.v=v;this.t=v;this.vel=0;this.done=null;this.on(v);};
+Spring.prototype.to=function(target,vel,done){
+  var s=this;
+  if(vel!=null)s.vel=vel;
+  s.t=target;s.done=done||null;
+  if(RM){s.stop();s.v=target;s.vel=0;s.on(target);var d0=s.done;s.done=null;if(d0)d0();return;}
+  if(s.raf)return;
+  var last=performance.now();
+  function step(now){
+    var dt=Math.min((now-last)/1000,1/30),n,h,i,a;
+    last=now;
+    n=Math.max(1,Math.ceil(dt*240));h=dt/n;
+    for(i=0;i<n;i++){a=-s.k*(s.v-s.t)-s.c*s.vel;s.vel+=a*h;s.v+=s.vel*h;}
+    if(Math.abs(s.v-s.t)<0.05&&Math.abs(s.vel)<2){
+      s.v=s.t;s.vel=0;s.raf=0;s.on(s.v);
+      var d=s.done;s.done=null;if(d)d();return;
+    }
+    s.on(s.v);
+    s.raf=requestAnimationFrame(step);
+  }
+  s.raf=requestAnimationFrame(step);
+};
+function project(v){return (v/1000)*0.998/(1-0.998);}              /* proyección de momento de Apple */
+function rubber(o,dim){var c=.55;return (o*dim*c)/(dim+c*Math.abs(o));}
+function pushHist(h,t,x){h.push({t:t,x:x});while(h.length>2&&t-h[0].t>100)h.shift();}
+function velocity(h){if(h.length<2)return 0;var a=h[0],b=h[h.length-1],dt=(b.t-a.t)/1000;return dt>0?(b.x-a.x)/dt:0;}
+
+/* Caja que se transforma de un elemento a otro (píldora de pestañas, chips, segmentados) */
+function rectOf(b){return {x:b.offsetLeft,y:b.offsetTop,w:b.offsetWidth,h:b.offsetHeight};}
+function Box(el){
+  var st={x:0,y:0,w:0,h:0},sp={},keys=["x","y","w","h"];
+  function apply(){el.style.transform="translate("+st.x+"px,"+st.y+"px)";el.style.width=st.w+"px";el.style.height=st.h+"px";}
+  keys.forEach(function(k){sp[k]=new Spring(0,.8,.4,function(v){st[k]=v;apply();});});
+  this.set=function(r){keys.forEach(function(k){sp[k].set(r[k]);});};
+  this.go=function(r){keys.forEach(function(k){sp[k].to(r[k]);});};
+}
+var boxLast={};
+function decorateBoxes(root){
+  $$("[data-box]",root).forEach(function(c){
+    var key=c.getAttribute("data-box"),b=$('[aria-pressed="true"]',c),bx=$(".bx",c);
+    if(!b||!bx)return;
+    var to=rectOf(b),box=new Box(bx);
+    box.set(boxLast[key]||to);
+    box.go(to);
+    boxLast[key]=to;
+    if(key==="chips"&&b.scrollIntoView){b.scrollIntoView({inline:"center",block:"nearest",behavior:RM?"auto":"smooth"});}
+  });
+}
+
+/* ---------- Render y navegación ---------- */
+var TABS=["inicio","teoria","hacer","escribir","plan"];
+var TITLES={inicio:"Hoja de ruta",teoria:"Teoría",hacer:"Hacer",escribir:"Escribir",plan:"Plan"};
+var VIEWS={inicio:vInicio,teoria:vTeoria,hacer:vHacer,escribir:vEscribir,plan:vPlan};
+var navBox=new Box($("#navInd")),navSeeded=false,topObs=null;
+
+function autosize(root){
+  $$("textarea",root).forEach(function(t){
+    if(t.id==="fbText")return;
+    t.style.height="auto";t.style.height=t.scrollHeight+2+"px";
+  });
+}
+function stagger(parent,from,dy,step){
+  if(RM||!parent)return;
+  var kids=parent.children,i,n=Math.min(kids.length,from+9);
+  for(i=from;i<n;i++){
+    anim(kids[i],[{opacity:0,transform:"translateY("+dy+"px)"},{opacity:1,transform:"none"}],
+      {duration:SP_UI.ms+100,delay:(i-from)*step,easing:ease(SP_UI),fill:"backwards"});
+  }
+}
+function placeNav(instant){
+  var b=$('#nav button[aria-current="page"]');
+  if(!b)return;
+  var r=rectOf(b);
+  if(!navSeeded||instant){navBox.set(r);navSeeded=true;}else navBox.go(r);
+}
+function watchTitle(el,tab){
+  var bar=$("#topbar");
+  $("#topTitle").textContent=TITLES[tab];
+  bar.classList.remove("on");
+  if(topObs){topObs.disconnect();topObs=null;}
+  var big=$(".panel-head,.slate",el);
+  if(big&&"IntersectionObserver" in window){
+    topObs=new IntersectionObserver(function(en){
+      var e=en[0];
+      bar.classList.toggle("on",!e.isIntersecting&&e.boundingClientRect.bottom<12);
+    },{threshold:0});
+    topObs.observe(big);
+  }
+}
+/* opt.enter: "tab" (direccional), "phase" (entra por el lado del gesto), "soft", o nada */
+function renderTab(tab,opt){
+  opt=opt||{};
+  var el=$("#p-"+tab);
+  el.innerHTML=VIEWS[tab]();
+  autosize(el);
+  decorateBoxes(el);
+  if(opt.enter==="tab"){
+    var d=opt.dir||0;
+    anim(el,[{opacity:0,transform:"translateX("+(d*32)+"px)"},{opacity:1,transform:"none"}],{duration:SP_UI.ms+60,easing:ease(SP_UI)});
+    stagger(el,0,14,38);
+    stagger($(".swipe",el),0,12,34);
+    watchTitle(el,tab);
+  }else if(opt.enter==="phase"){
+    var sw2=$(".swipe",el),W=sw2?sw2.offsetWidth:320,dd=opt.dir||1;
+    if(sw2){
+      anim(sw2,[{opacity:0,transform:"translateX("+(dd*W*.22)+"px)"},{opacity:1,transform:"none"}],{duration:SP_UI.ms+60,easing:ease(SP_UI)});
+      stagger(sw2,0,10,30);
+    }
+    watchTitle(el,tab);
+  }else if(opt.enter==="soft"){
+    stagger(el,2,8,30);
+  }
+  if(opt.enter==="tab"||opt.enter==="phase")revealTitles(el);
+  if(tab==="inicio"){
+    tiltSlate();
+    if(opt.enter==="tab")setTimeout(clap,320);
+    requestAnimationFrame(function(){requestAnimationFrame(refreshCounts);});
+  }
+}
+function show(tab,fresh,dir){
+  var prev=S.ui.tab;
+  S.ui.tab=tab;save();
+  var d=dir!==undefined?dir:(TABS.indexOf(tab)-TABS.indexOf(prev));
+  d=d>0?1:(d<0?-1:0);
+  $$("#main > section").forEach(function(s){s.hidden=(s.id!=="p-"+tab);});
+  $$("#nav button[data-tab]").forEach(function(b){
+    if(b.getAttribute("data-tab")===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
+  });
+  placeNav(false);
+  renderTab(tab,{enter:"tab",dir:d});
+  if(fresh)window.scrollTo(0,0);
+}
+function setPhase(n,dir){
+  if(n===S.ui.phase||!phaseById(n))return;
+  var d=dir||(n>S.ui.phase?1:-1);
+  var hadFocus=document.activeElement&&document.activeElement.classList&&document.activeElement.classList.contains("chip");
+  S.ui.phase=n;save();
+  renderTab(S.ui.tab,{enter:"phase",dir:d});
+  if(hadFocus){var c=$('#p-'+S.ui.tab+' .chip[aria-pressed="true"]');if(c)c.focus({preventScroll:true});}
+}
+
+/* Contadores: número que rueda, anillo y barras con muelle */
+function tick(n,to,fmt){
+  var from=parseInt(n.getAttribute("data-v")||"0",10);
+  n.setAttribute("data-v",to);
+  if(RM||from===to){n.textContent=fmt(to);return;}
+  var t0=performance.now(),dur=520;
+  (function f(now){
+    var p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);
+    n.textContent=fmt(Math.round(from+(to-from)*e));
+    if(p<1)requestAnimationFrame(f);
+  })(t0);
+}
+function refreshCounts(){
+  PHASES.forEach(function(p){
+    $$('[data-count="p'+p.id+'"]').forEach(function(n){
+      n.textContent=fracText(p.id);
+      n.classList.toggle("done",phaseDone(p.id)===phaseTotal(p.id));
+    });
+    $$('[data-count="p'+p.id+'d"]').forEach(function(n){n.textContent=phaseDone(p.id);});
+    var dn=phaseDone(p.id)===phaseTotal(p.id);
+    $$('[data-frame="p'+p.id+'"]').forEach(function(n){n.classList.toggle("done",dn);});
+    $$('[data-beat="p'+p.id+'"]').forEach(function(n){n.classList.toggle("done",dn);});
+  });
+  $$("[data-tick]").forEach(function(n){n.classList.toggle("on",!!S.checks[n.getAttribute("data-tick")]);});
+  $$('[data-count="all"]').forEach(function(n){tick(n,allDone(),function(v){return v+"/"+allTotal();});});
+  $$('[data-count="phase"]').forEach(function(n){n.textContent=currentPhase();});
+}
+
+/* Claqueta: la pala se cierra con rebote al entrar y al tocarla */
+var stickSpring=null;
+function clap(){
+  var st=$("#stick");
+  if(!st)return;
+  stickSpring=new Spring(-24,.5,.34,function(a){st.style.transform="rotate("+a+"deg)";});
+  stickSpring.to(0,0);
+  buzz(14);
+}
+/* Inclinación 3D de la claqueta siguiendo el puntero, con muelle */
+function tiltSlate(){
+  var el=$("#slate");
+  if(!el||RM)return;
+  var rx=new Spring(0,.8,.5,function(){apply();}),ry=new Spring(0,.8,.5,function(){apply();});
+  function apply(){el.style.transform="rotateX("+rx.v+"deg) rotateY("+ry.v+"deg)";}
+  el.addEventListener("pointermove",function(e){
+    var r=el.getBoundingClientRect();
+    ry.to(((e.clientX-r.left)/r.width-.5)*10);
+    rx.to(-((e.clientY-r.top)/r.height-.5)*8);
+  });
+  el.addEventListener("pointerleave",function(){rx.to(0);ry.to(0);});
+  el.addEventListener("click",clap);
+}
+/* Titulares que se revelan palabra a palabra (clip hacia arriba) */
+function revealTitles(root){
+  if(RM)return;
+  $$(".big-h,.ph-title,.sl-title,.sect > h3",root).forEach(function(el){
+    var words=el.textContent.trim().split(/\s+/),i,inner;
+    el.innerHTML=words.map(function(w){return '<span class="wd"><span class="wi">'+esc(w)+'</span></span>';}).join(" ");
+    inner=$$(".wi",el);
+    for(i=0;i<inner.length;i++){
+      anim(inner[i],[{transform:"translateY(112%)"},{transform:"none"}],
+        {duration:SP_UI.ms+160,delay:60+i*55,easing:ease(SP_UI),fill:"backwards"});
+    }
+  });
+}
+/* Textura de grano generada una vez (superposición fija, sin eventos) */
+(function(){
+  try{
+    var c=document.createElement("canvas"),x,d,i,v;
+    c.width=c.height=160;
+    x=c.getContext("2d");d=x.createImageData(160,160);
+    for(i=0;i<d.data.length;i+=4){v=Math.random()*255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255;}
+    x.putImageData(d,0,0);
+    $("#grain").style.backgroundImage="url("+c.toDataURL("image/png")+")";
+  }catch(e){}
+})();
+
+/* Confirmaciones: toast y ráfaga de confeti con los cuatro colores del guion */
+var toastTimer=0;
+function toast(msg){
+  var t=$("#toast");
+  t.textContent=msg;t.hidden=false;
+  anim(t,[{opacity:0,transform:"translateY(18px) scale(.94)"},{opacity:1,transform:"none"}],{duration:SP_POP.ms,easing:ease(SP_POP)});
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){
+    var a=anim(t,[{opacity:1},{opacity:0}],{duration:200,easing:"ease-out"});
+    if(a)a.onfinish=function(){t.hidden=true;};else t.hidden=true;
+  },2400);
+}
+function burst(x,y,n,reach){
+  if(RM)return;
+  var cols=["var(--c-blue)","var(--c-red)","var(--c-yellow)","var(--ink)"],i;
+  for(i=0;i<n;i++){
+    var p=document.createElement("i"),a=Math.random()*Math.PI*2,d=reach*(.45+Math.random()*.75);
+    var dx=Math.cos(a)*d,dy=Math.sin(a)*d-reach*.25,w=5+Math.random()*5;
+    p.className="pt";
+    p.style.cssText="left:"+x+"px;top:"+y+"px;width:"+w+"px;height:"+(w*(.5+Math.random()*.8))+"px;background:"+cols[i%4];
+    document.body.appendChild(p);
+    var an=p.animate([
+      {transform:"translate(-50%,-50%) rotate(0deg) scale(1)",opacity:1},
+      {transform:"translate("+dx+"px,"+dy+"px) rotate("+(Math.random()*540-270)+"deg) scale(.5)",opacity:0}
+    ],{duration:620+Math.random()*420,easing:"cubic-bezier(.16,1,.3,1)"});
+    an.onfinish=(function(el){return function(){el.remove();};})(p);
+  }
+}
+function buzz(ms){try{if(navigator.vibrate)navigator.vibrate(ms);}catch(e){}}
+function shake(el){
+  anim(el,[{transform:"translateX(0)"},{transform:"translateX(-7px)"},{transform:"translateX(6px)"},{transform:"translateX(-4px)"},{transform:"translateX(0)"}],{duration:320,easing:"ease-out"});
+}
+
+/* ---------- Hoja inferior (bottom sheet) ---------- */
+var sheet=$("#sheet"),scrim=$("#scrim"),mainEl=$("#main");
+var sheetY=0,sheetH=0,sheetOpen=false,lastFocus=null,sdrag=null;
+var sheetSpring=new Spring(0,.86,.44,function(y){
+  sheetY=y;
+  sheet.style.transform="translateY("+y+"px)";
+  var p=sheetH?Math.max(0,Math.min(1,1-y/sheetH)):0;
+  scrim.style.opacity=p;
+  mainEl.style.transform=p>0.001?"scale("+(1-.05*p)+")":"";
+});
+function setInert(on){[mainEl,$("#nav"),$("#topbar")].forEach(function(n){if(n)n.inert=on;});}
+function openSheet(){
+  lastFocus=document.activeElement;
+  scrim.hidden=false;sheet.hidden=false;
+  sheetH=sheet.offsetHeight||380;
+  mainEl.style.transformOrigin="50% 0";
+  sheetSpring.set(sheetH);
+  sheetOpen=true;setInert(true);
+  sheetSpring.to(0,0);
+  setTimeout(function(){var f=$("#sh-text");if(f)f.focus({preventScroll:true});},120);
+}
+function closeSheet(vel){
+  if(!sheetOpen)return;
+  sheetOpen=false;
+  sheetSpring.to(sheetH,vel||0,function(){
+    sheet.hidden=true;scrim.hidden=true;mainEl.style.transform="";setInert(false);
+    if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});
+  });
+}
+function saveIdea(){
+  var tx=$("#sh-text"),wy=$("#sh-why");
+  if(!tx.value.trim()){tx.focus();shake(tx);return;}
+  var id="i"+Date.now();
+  S.ideas.unshift({id:id,text:tx.value.trim(),why:wy.value.trim(),chosen:false});
+  save();tx.value="";wy.value="";
+  closeSheet(0);
+  renderTab("escribir");
+  var n=$('.idea[data-id="'+id+'"]');
+  anim(n,[{opacity:0,transform:"scale(.9)"},{opacity:1,transform:"scale(1)"}],{duration:SP_POP.ms,easing:ease(SP_POP),delay:120,fill:"backwards"});
+  toast("Idea añadida");
+}
+$("#sheetGrab").addEventListener("pointerdown",function(e){
+  if(!sheetOpen||e.button>0)return;
+  sheetSpring.stop();                      /* agarrar la hoja en pleno vuelo la interrumpe */
+  sdrag={id:e.pointerId,y0:e.clientY,base:sheetY,hist:[]};
+  pushHist(sdrag.hist,e.timeStamp,e.clientY);
+  this.setPointerCapture(e.pointerId);
+});
+$("#sheetGrab").addEventListener("pointermove",function(e){
+  if(!sdrag||e.pointerId!==sdrag.id)return;
+  var y=sdrag.base+(e.clientY-sdrag.y0);
+  if(y<0)y=-rubber(-y,sheetH*.6);        /* resistencia hacia arriba */
+  pushHist(sdrag.hist,e.timeStamp,e.clientY);
+  sheetSpring.set(y);
+});
+function endSheetDrag(){
+  if(!sdrag)return;
+  var v=velocity(sdrag.hist),proj=sheetY+project(v);
+  sdrag=null;
+  if(proj>sheetH*.55||(v>900&&sheetY>20))closeSheet(v);
+  else sheetSpring.to(0,v);
+}
+$("#sheetGrab").addEventListener("pointerup",endSheetDrag);
+$("#sheetGrab").addEventListener("pointercancel",endSheetDrag);
+scrim.addEventListener("click",function(){closeSheet(0);});
+document.addEventListener("keydown",function(e){
+  if(!sheetOpen)return;
+  if(e.key==="Escape"){closeSheet(0);return;}
+  if(e.key==="Tab"){
+    var f=$$("input,button,textarea",sheet).filter(function(n){return !n.disabled;});
+    if(!f.length)return;
+    var a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}
+    else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}
+  }
+});
+
+/* ---------- Deslizar entre fases (arrastre 1:1, momento y resistencia en los extremos) ---------- */
+var sw=null;
+document.addEventListener("pointerdown",function(e){
+  if(e.pointerType==="mouse"||e.button>0||sheetOpen)return;
+  var el=e.target.closest(".swipe");
+  if(!el||e.target.closest("input,textarea,select"))return;
+  sw={el:el,id:e.pointerId,x0:e.clientX,y0:e.clientY,x:0,lock:false,hist:[],w:Math.max(el.offsetWidth,240)};
+  pushHist(sw.hist,e.timeStamp,e.clientX);
+});
+document.addEventListener("pointermove",function(e){
+  if(!sw||e.pointerId!==sw.id)return;
+  var dx=e.clientX-sw.x0,dy=e.clientY-sw.y0;
+  if(!sw.lock){
+    if(Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.3){sw.lock=true;try{sw.el.setPointerCapture(e.pointerId);}catch(err){}sw.el.classList.add("dragging");}
+    else if(Math.abs(dy)>10){sw=null;return;}
+    else return;
+  }
+  var ph=S.ui.phase,x=dx;
+  if((dx>0&&ph<=1)||(dx<0&&ph>=PHASES.length))x=rubber(dx,sw.w);
+  sw.x=x;
+  pushHist(sw.hist,e.timeStamp,e.clientX);
+  sw.el.style.transform="translateX("+x+"px)";
+  sw.el.style.opacity=String(1-Math.min(Math.abs(x)/sw.w,.6)*.7);
+});
+function endSwipe(cancel){
+  var s=sw;sw=null;
+  if(!s||!s.lock)return;
+  var el=s.el;
+  el.classList.remove("dragging");
+  var v=cancel?0:velocity(s.hist),proj=s.x+project(v),W=s.w,ph=S.ui.phase,dir=0;
+  if(!cancel){
+    if(proj<-W*.3&&ph<PHASES.length)dir=1;
+    else if(proj>W*.3&&ph>1)dir=-1;
+  }
+  var sp=new Spring(s.x,dir?1:.8,dir?.3:.4,function(x){
+    el.style.transform="translateX("+x+"px)";
+    el.style.opacity=String(1-Math.min(Math.abs(x)/W,.6)*.7);
+  });
+  if(dir){sp.to(-dir*W*1.1,v,function(){setPhase(ph+dir,dir);});}
+  else{sp.to(0,v,function(){el.style.transform="";el.style.opacity="";});}
+}
+document.addEventListener("pointerup",function(e){if(sw&&e.pointerId===sw.id)endSwipe(false);});
+document.addEventListener("pointercancel",function(e){if(sw&&e.pointerId===sw.id)endSwipe(true);});
+
+/* Foco de luz que sigue al puntero (solo con ratón) */
+document.addEventListener("pointermove",function(e){
+  if(e.pointerType!=="mouse")return;
+  var t=e.target.closest(".beat,.tile,.week,.next,.src");
+  if(!t)return;
+  var r=t.getBoundingClientRect();
+  t.style.setProperty("--mx",(e.clientX-r.left)+"px");
+  t.style.setProperty("--my",(e.clientY-r.top)+"px");
+});
+
+/* ---------- Eventos ---------- */
+function curScript(){return S.scripts[S.ui.video];}
+function findRow(id){var rs=curScript().rows;for(var i=0;i<rs.length;i++){if(rs[i].id===id)return i;}return -1;}
+function scriptText(){
+  var v=S.ui.video,sc=curScript(),L=[];
+  L.push("GUION · VÍDEO "+v);
+  L.push("Título: "+sc.title);L.push("Duración: "+sc.dur);L.push("Emoción final: "+sc.emo);
+  L.push("Hook: "+sc.hook);L.push("Necesidad: "+sc.need);L.push("CTA: "+sc.cta);L.push("Momento tú: "+sc.you);L.push("");
+  sc.rows.forEach(function(r){L.push("["+ROWTYPES[r.type].label+"] "+r.text);});
+  return L.join("\n");
+}
+var resetArmed=false;
+
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button,a");
+  if(!t||t.tagName==="A")return;
+  var d=t.dataset;
+
+  if(t.closest("#nav")&&d.tab){show(d.tab,true);return;}
+  if(d.go){
+    if(d.phase)S.ui.phase=parseInt(d.phase,10);
+    if(d.sub)S.ui.sub=d.sub;
+    show(d.go,true);return;
+  }
+  if(d.phase&&(t.classList.contains("chip")||(!d.act&&t.classList.contains("btn")))){
+    var np=parseInt(d.phase,10);
+    setPhase(np,np>S.ui.phase?1:-1);
+    window.scrollTo(0,0);return;
+  }
+  if(d.sub&&!d.go){
+    S.ui.sub=d.sub;save();renderTab("escribir",{enter:"soft"});return;
+  }
+  if(d.video){S.ui.video=parseInt(d.video,10);save();renderTab("escribir",{enter:"soft"});return;}
+
+  switch(d.act){
+    case "sheet-open":openSheet();break;
+    case "sheet-close":closeSheet(0);break;
+    case "sheet-save":saveIdea();break;
+    case "idea-pick":
+      S.ideas.forEach(function(i){if(i.id===d.id)i.chosen=!i.chosen;});save();buzz(8);renderTab("escribir");
+      var card=$('.idea[data-id="'+d.id+'"]');
+      anim(card,[{transform:"scale(.97)"},{transform:"scale(1)"}],{duration:SP_POP.ms,easing:ease(SP_POP)});
+      break;
+    case "idea-del":
+      S.ideas=S.ideas.filter(function(i){return i.id!==d.id;});save();renderTab("escribir");break;
+    case "row-add":
+      curScript().rows.push(newRow(d.type));save();renderTab("escribir");
+      var ta=$$(".srow textarea"),last=ta[ta.length-1];
+      last.focus();
+      anim(last.closest(".srow"),[{opacity:0,transform:"translateY(10px) scale(.98)"},{opacity:1,transform:"none"}],{duration:SP_POP.ms,easing:ease(SP_POP)});
+      break;
+    case "row-del":
+      var i1=findRow(d.row);if(i1>-1)curScript().rows.splice(i1,1);save();renderTab("escribir");break;
+    case "row-up":
+    case "row-down":
+      var i2=findRow(d.row),j=d.act==="row-up"?i2-1:i2+1,rs=curScript().rows;
+      if(i2>-1&&j>=0&&j<rs.length){var tmp=rs[i2];rs[i2]=rs[j];rs[j]=tmp;save();renderTab("escribir");}
+      break;
+    case "copy":
+      var txt=scriptText(),msg=$("#copyMsg");
+      var fb=function(){
+        var box=$("#fallback"),ta2=$("#fbText");box.hidden=false;ta2.value=txt;ta2.focus();ta2.select();
+        msg.textContent="Selecciona y copia el texto.";
+      };
+      try{
+        navigator.clipboard.writeText(txt).then(function(){msg.textContent="";toast("Guion copiado");},fb);
+      }catch(err){fb();}
+      break;
+    case "clear":
+      if(t.getAttribute("data-armed")){S.scripts[S.ui.video]=newScript();save();renderTab("escribir",{enter:"soft"});}
+      else{t.setAttribute("data-armed","1");t.textContent="Confirmar: vaciar";t.classList.remove("quiet");}
+      break;
+    case "reset":
+      if(!resetArmed){resetArmed=true;t.textContent="Confirmar: borrar todo";t.classList.remove("quiet");$("#resetMsg").textContent=" Se borrarán marcas, ideas y guiones.";}
+      else{S=defaults();seq=1;S.scripts[1]=newScript();S.scripts[2]=newScript();resetArmed=false;save();show("inicio",true);}
+      break;
+  }
+});
+
+document.addEventListener("change",function(e){
+  var t=e.target;
+  if(t.dataset.key){
+    if(t.checked)S.checks[t.dataset.key]=1;else delete S.checks[t.dataset.key];
+    save();refreshCounts();
+    var box=t.nextElementSibling;
+    if(t.checked){
+      buzz(10);
+      anim(box,[{transform:"scale(.72)"},{transform:"scale(1)"}],{duration:SP_POP.ms,easing:ease(SP_POP)});
+      var ph=parseInt(t.dataset.key.slice(1),10);
+      if(phaseDone(ph)===phaseTotal(ph)){
+        var r=box.getBoundingClientRect();
+        if(allDone()===allTotal()){
+          burst(window.innerWidth/2,window.innerHeight*.4,46,230);
+          toast("Método completo. Ya puedes publicar y revisar.");
+        }else{
+          burst(r.left+r.width/2,r.top+r.height/2,22,110);
+          toast("Fase "+ph+" completada");
+        }
+      }
+    }
+    return;
+  }
+  if(t.dataset.week){
+    S.weeks[t.dataset.week]=t.checked;save();
+    t.closest(".week").classList.toggle("done",t.checked);
+    if(t.checked){
+      var b2=t.nextElementSibling;
+      anim(b2,[{transform:"scale(.72)"},{transform:"scale(1)"}],{duration:SP_POP.ms,easing:ease(SP_POP)});
+      var r2=b2.getBoundingClientRect();
+      burst(r2.left+r2.width/2,r2.top+r2.height/2,16,80);
+      buzz(10);
+    }
+    return;
+  }
+  if(t.tagName==="SELECT"&&t.dataset.row){
+    var i=findRow(t.dataset.row);if(i>-1){curScript().rows[i].type=t.value;save();renderTab("escribir");}
+  }
+});
+
+document.addEventListener("input",function(e){
+  var t=e.target;
+  if(t.tagName==="TEXTAREA"&&t.id!=="fbText"){t.style.height="auto";t.style.height=t.scrollHeight+2+"px";}
+  if(t.dataset.plan){S.plan[t.dataset.plan]=t.value;save();return;}
+  if(t.dataset.row&&t.dataset.f==="text"){
+    var i=findRow(t.dataset.row);if(i>-1){curScript().rows[i].text=t.value;save();}return;
+  }
+  if(t.dataset.f&&t.closest("#p-escribir")&&!t.dataset.row){curScript()[t.dataset.f]=t.value;save();}
+});
+
+/* Flechas para cambiar de fase con el teclado cuando el foco está en un chip */
+document.addEventListener("keydown",function(e){
+  if(sheetOpen||(e.key!=="ArrowLeft"&&e.key!=="ArrowRight"))return;
+  var c=document.activeElement;
+  if(!c||!c.classList||!c.classList.contains("chip"))return;
+  var n=S.ui.phase+(e.key==="ArrowRight"?1:-1);
+  if(phaseById(n)){e.preventDefault();setPhase(n,e.key==="ArrowRight"?1:-1);}
+});
+
+window.addEventListener("resize",function(){placeNav(true);});
+window.addEventListener("pagehide",function(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}});
+
+if(!VIEWS[S.ui.tab])S.ui.tab="inicio";
+if(!phaseById(S.ui.phase))S.ui.phase=1;
+if(S.ui.sub!=="ideas"&&S.ui.sub!=="guion")S.ui.sub="ideas";
+if(S.ui.video!==1&&S.ui.video!==2)S.ui.video=1;
+[1,2].forEach(function(v){if(!S.scripts[v])S.scripts[v]=newScript();});
+show(S.ui.tab,false,0);
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){placeNav(true);});}
 })();
 </script>
-
 <script>
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}
 </script>
