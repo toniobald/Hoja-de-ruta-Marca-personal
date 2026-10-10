@@ -486,6 +486,9 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.85}
 .f3{display:flex;gap:4px}
 .f3 button{width:40px;min-height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);font:700 .95rem var(--f-mono);color:var(--muted)}
 .f3 button[aria-pressed="true"]{background:var(--accent);border-color:transparent;color:var(--accent-ink);box-shadow:0 8px 20px -10px rgba(255,131,64,.7)}
+.ainote{margin:10px 0 0;padding:10px 12px;border-left:3px solid var(--accent);border-radius:0 var(--r-sm) var(--r-sm) 0;background:var(--accent-soft);font-size:.9rem;line-height:1.4}
+.ainote b{font:600 .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-text);margin-right:6px}
+.btn[disabled]{opacity:.55;pointer-events:none}
 .hkbox{display:grid;gap:2px;margin-top:8px;padding-top:12px;border-top:1px dashed var(--line)}
 .hkbox > b{font:600 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-text)}
 .hkbox em{font-style:normal;color:var(--muted)}
@@ -692,6 +695,15 @@ function ghPut(p,text,sha,msg){
     return r.json();
   });
 }
+/* Lanza el workflow "Valorar" del repo privado. Necesita permiso Actions en el token; si falta, lo hará el cron. */
+var aiWant=false;
+function dispatchValorar(){
+  var h=ghHeaders();h["Content-Type"]="application/json";
+  fetch((CONN.api||"https://api.github.com")+"/repos/"+CONN.repo+"/actions/workflows/valorar.yml/dispatches",
+    {method:"POST",headers:h,body:JSON.stringify({ref:CONN.ref||"main"})}).then(function(r){
+    if(!r.ok)toast("Valoración en cola. Se hará sola en un par de horas");
+  }).catch(function(){});
+}
 function persist(){
   var h=JSON.stringify(payload());
   putJSON(UKEY,S.ui);
@@ -720,6 +732,7 @@ function push(){
   }).then(function(res){
     remoteSha=res.content.sha;
     pushing=false;
+    if(aiWant){aiWant=false;dispatchValorar();}
     if(JSON.stringify(payload())===sent){try{localStorage.removeItem(PKEY);}catch(e){}setStatus("saved");}
     else schedulePush();
   }).catch(function(e){
@@ -1055,7 +1068,9 @@ function vIdeas(){
         h+='</div>';
       }
       h+='</div></details>'+
+         (i.ai==="done"&&i.note?'<p class="ainote"><b>Valoración</b> '+esc(i.note)+'</p>':'')+
          '<div class="acts"><button type="button" class="btn'+(i.chosen?' primary':'')+'" data-act="idea-pick" data-id="'+i.id+'">'+(i.chosen?'Quitar elección':'Elegir')+'</button>'+
+         (CONN?'<button type="button" class="btn" data-act="idea-ai" data-id="'+i.id+'"'+(i.ai==="pend"?' disabled':'')+'>'+(i.ai==="pend"?'Valorando…':(i.ai==="done"?'Revalorar con IA':'Valorar con IA'))+'</button>':'')+
          '<button type="button" class="btn quiet" data-act="idea-del" data-id="'+i.id+'">Borrar</button></div></div>';
     });
     h+='</div>';
@@ -2143,6 +2158,14 @@ document.addEventListener("click",function(e){
       var card=$('.idea[data-id="'+d.id+'"]');
       anim(card,[{transform:"scale(.97)"},{transform:"scale(1)"}],{duration:SP_POP.ms,easing:ease(SP_POP)});
       break;
+    case "idea-ai":{
+      var ia=null;S.ideas.forEach(function(x){if(x.id===d.id)ia=x;});
+      if(ia&&ia.ai!=="pend"){
+        ia.ai="pend";S.ui.oi=ia.id;aiWant=true;save();buzz(8);
+        toast("Pedida. Vuelve en un par de minutos");
+        renderTab("escribir");
+      }
+      break;}
     case "idea-sc":{
       var it=null;S.ideas.forEach(function(x){if(x.id===d.id)it=x;});
       if(it){
