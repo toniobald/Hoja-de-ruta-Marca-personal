@@ -244,9 +244,10 @@ button{transition:transform .12s var(--ease),background-color .2s,border-color .
 .note{color:var(--muted);font-size:.93rem;margin-top:20px;max-width:66ch}
 
 .signoff{margin:44px 0 18px;text-align:center;font:800 1.5rem/1 var(--f-display);letter-spacing:-.02em;color:var(--muted)}
-.hd-logo{display:block;width:78px;height:auto;margin:0 auto 4px;overflow:visible}
-.lg-k,.lg-a{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:5}.lg-k{stroke:var(--ink)}.lg-a{stroke:var(--accent)}.lg-f{opacity:.4;stroke-width:4}
-.lg-s{transform-box:view-box;transform-origin:24px 38px;transform:rotate(-9deg)}
+.hd-logo{display:block;width:70px;height:auto;margin:0 auto 4px;overflow:visible}
+.lg-bd{fill:var(--accent)}.lg-s2{font:800 41px var(--f-display);fill:var(--accent-ink)}
+.lg-bar{fill:var(--ink)}.lg-st{fill:var(--bg)}
+.lg-s{transform-box:view-box;transform-origin:18px 39px;transform:rotate(-8.5deg)}
 .mrow{display:flex;align-items:center;gap:14px}
 .mascot{width:58px;height:58px;flex:none}
 .mascot svg{width:100%;height:100%;display:block;overflow:visible}
@@ -733,15 +734,12 @@ function applyContent(c){
 }
 function T(k){return TXT[k]||"";}
 /* Logo: una cazuela cuya tapa es la pala de una claqueta */
-var LOGO_SVG='<svg class="hd-logo" viewBox="0 0 120 96" aria-hidden="true" focusable="false">'+
-  '<path class="lg-k" d="M12 64 H26 M94 64 H108"/>'+
-  '<path class="lg-k" d="M26 52 H94 V72 Q94 88 78 88 H42 Q26 88 26 72 Z"/>'+
-  '<path class="lg-k lg-f" d="M38 66 H62 M38 76 H74"/>'+
-  '<path class="lg-a" d="M22 44 H98"/>'+
-  '<g id="stick" class="lg-s">'+
-    '<rect class="lg-k" x="22" y="26" width="76" height="12" rx="3.5"/>'+
-    '<path class="lg-a" d="M36 38 L43 26 M52 38 L59 26 M68 38 L75 26 M84 38 L91 26"/>'+
-  '</g></svg>';
+var LOGO_SVG='<svg class="hd-logo" viewBox="0 0 100 100" aria-hidden="true" focusable="false">'+
+  '<defs><clipPath id="lgClip"><rect x="14" y="20" width="72" height="16" rx="4.5"/></clipPath></defs>'+
+  '<rect class="lg-bd" x="14" y="40" width="72" height="48" rx="8.5"/>'+
+  '<text class="lg-s2" x="50" y="79" text-anchor="middle">S</text>'+
+  '<g id="stick" class="lg-s"><rect class="lg-bar" x="14" y="20" width="72" height="16" rx="4.5"/>'+
+  '<g clip-path="url(#lgClip)"><path class="lg-st" d="M25 20 L37 20 L28 36 L16 36Z M49 20 L61 20 L52 36 L40 36Z M73 20 L85 20 L76 36 L64 36Z M97 20 L109 20 L100 36 L88 36Z"/></g></g></svg>';
 
 
 /* ---------- Estado: tus datos (se sincronizan con datos.json del repo privado) ---------- */
@@ -999,9 +997,12 @@ function ckey(p,i){return "f"+p+"-"+i;}
 function phaseDone(p){var n=0;phaseById(p).todo.forEach(function(_,i){if(S.checks[ckey(p,i)])n++;});return n;}
 function phaseTotal(p){return phaseById(p).todo.length;}
 /* Progreso = etapas por guion: Guion (al tenerlo), Grabado, Editado, Publicado */
-function stageCount(n){var sc=S.scripts[n]||{},st=sc.st||{};return (scriptEmpty(sc)?0:1)+(st.r?1:0)+(st.e?1:0)+(st.p?1:0);}
+function prepLen(){var p3=phaseById(3);return p3?p3.todo.length:0;}
+function prepDone(sc){var n=0,i,pr=(sc&&sc.prep)||{},L=prepLen();for(i=0;i<L;i++)if(pr[i])n++;return n;}
+function stageCount(n){var sc=S.scripts[n]||{},st=sc.st||{};return (scriptEmpty(sc)?0:1)+prepDone(sc)+(st.r?1:0)+(st.e?1:0)+(st.p?1:0);}
 function allDone(){var t=0;filledIds().forEach(function(n){t+=stageCount(n);});return t;}
-function allTotal(){return 4*Math.max(2,filledIds().length);}
+function allTotal(){return (4+prepLen())*Math.max(2,filledIds().length);}
+function pctText(){var t=allTotal();return Math.round(allDone()*100/Math.max(1,t))+"%";}
 function nextAction(){
   var ids=filledIds(),i,n,st;
   if(!ids.length)return {kind:"idea"};
@@ -1105,9 +1106,9 @@ function ticksHTML(){
 }
 function vInicio(){
   var nx=nextStep(),h='';
-  h+='<button type="button" class="hero-dial" id="heroDial" data-act="logo" aria-label="Progreso: '+allDone()+' de '+allTotal()+' etapas hechas">'+
+  h+='<button type="button" class="hero-dial" id="heroDial" data-act="logo" aria-label="Tu ruta: '+pctText()+' completada">'+
      '<svg class="hd-svg" viewBox="0 0 200 200" aria-hidden="true"></svg>'+
-     '<span class="hd-read">'+LOGO_SVG+'<b data-count="all" data-roll="all">'+allDone()+'/'+allTotal()+'</b><small>etapas hechas</small></span></button>'+
+     '<span class="hd-read">'+LOGO_SVG+'<b data-count="all" data-roll="all">'+pctText()+'</b><small>de tu ruta</small></span></button>'+
      '<h1 class="sl-title hd-title">'+esc(T("titulo")||"Sofrito")+'</h1>'+
      '<p class="hd-meta">'+filledIds().length+(filledIds().length===1?' guion':' guiones')+' · '+(S.pubs||[]).length+' publicados</p>';
   h+='<p class="manifesto">'+T("manifiesto")+'</p>';
@@ -1355,12 +1356,12 @@ function vGuionRead(v){
   var stt=sc.st||{},prep=sc.prep||{},p3=phaseById(3),pn=0,pt=p3?p3.todo.length:0,pi;
   for(pi=0;pi<pt;pi++)if(prep[pi])pn++;
   h+='<div class="stages" role="group" aria-label="Etapas del vídeo">'+
-     '<span class="stg done"><i></i>Guion</span>'+
-     [["r","Grabado"],["e","Editado"],["p","Publicado"]].map(function(x){
+     '<span class="stg done"><i></i>F2 Guion</span>'+
+     [["r","F4 Grabado"],["e","F5 Editado"],["p","F6 Publicado"]].map(function(x){
        return '<button type="button" class="stg'+(stt[x[0]]?' done':'')+'" data-act="stage" data-s="'+x[0]+'" aria-pressed="'+(!!stt[x[0]])+'"><i></i>'+x[1]+'</button>';
      }).join("")+'</div>';
   if(p3){
-    h+='<div class="prep"><div class="prep-h"><b>Antes de grabar</b><span>'+pn+'/'+pt+'</span></div>';
+    h+='<div class="prep"><div class="prep-h"><b>F3 · Antes de grabar</b><span>'+pn+'/'+pt+'</span></div>';
     p3.todo.forEach(function(tx,i){
       h+='<label class="take pr"><input type="checkbox" data-act="prep" data-i="'+i+'"'+(prep[i]?' checked':'')+'><span class="box"></span><span class="tx">'+rich(tx)+'</span></label>';
     });
@@ -2084,7 +2085,7 @@ function vDiario(){
      (typeof heatHTML==="function"?heatHTML(S.days||{},12,todayISO()):'<p class="fine">Calendario no disponible.</p>')+'</div>';
   var tim=0;Object.keys(S.scripts||{}).forEach(function(v){tim+=((S.scripts[v]&&S.scripts[v].times)||[]).length;});
   h+='<div class="stats" style="margin-top:22px">'+
-     '<div class="stat"><b>'+allDone()+'/'+allTotal()+'</b><span>Etapas hechas</span></div>'+
+     '<div class="stat"><b>'+pctText()+'</b><span>De tu ruta</span></div>'+
      '<div class="stat"><b>'+filledIds().length+'</b><span>Guiones</span></div>'+
      '<div class="stat"><b>'+tim+'</b><span>Tomas cronometradas</span></div>'+
      '<div class="stat"><b>'+(S.pubs||[]).length+'</b><span>Publicados</span></div></div>';
@@ -2329,7 +2330,7 @@ function refreshCounts(){
     $$('[data-beat="p'+p.id+'"]').forEach(function(n){n.classList.toggle("done",dn);});
   });
   $$("[data-tick]").forEach(function(n){n.classList.toggle("on",!!S.checks[n.getAttribute("data-tick")]);});
-  $$('[data-count="all"]').forEach(function(n){tick(n,allDone(),function(v){return v+"/"+allTotal();});});
+  $$('[data-count="all"]').forEach(function(n){roll(n,pctText());});
   $$('[data-count="phase"]').forEach(function(n){n.textContent=currentPhase();});
   dialTo();
 }
@@ -2341,7 +2342,7 @@ function clap(quiet){
   if(!st)return;
   if(stickSpring)stickSpring.stop();
   stickSpring=new Spring(-34,.5,.34,function(a){st.style.transform="rotate("+a+"deg)";});
-  stickSpring.to(-9,0);
+  stickSpring.to(-8.5,0);
   if(quiet===true)return;
   buzz(14);
   if(S.ui.snd!==false&&typeof playClap==="function")playClap();
@@ -3030,6 +3031,7 @@ document.addEventListener("change",function(e){
     psc.prep=psc.prep||{};
     psc.prep[c.getAttribute("data-i")]=c.checked?1:0;
     save();
+    refreshCounts();
     var pn2=0,pb=c.closest(".prep");
     if(pb){$$("input[data-act=prep]",pb).forEach(function(x){if(x.checked)pn2++;});var sp=$(".prep-h span",pb);if(sp)sp.textContent=pn2+"/"+$$("input[data-act=prep]",pb).length;}
   }
