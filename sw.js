@@ -1,5 +1,5 @@
 /* Service worker de la cáscara. Solo guarda la app (código e iconos), nunca tus datos. Sube VERSION si cambias iconos o manifest. */
-var VERSION="v8";
+var VERSION="v9";
 var CACHE="sofrito-"+VERSION;
 var SHELL=["./","index.html","manifest.webmanifest","icon-180.png","icon-192.png","icon-512.png"];
 
