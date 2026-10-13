@@ -19,7 +19,9 @@ self.addEventListener("fetch",function(e){
   if(url.hostname==="api.github.com")return;
   if(req.mode==="navigate"){
     e.respondWith(fetch(req).then(function(r){
-      var copy=r.clone();caches.open(CACHE).then(function(c){c.put("index.html",copy);});
+      /* Solo se guarda si la respuesta es un 200 real: un 404 de GitHub Pages
+         (p.ej. tras un cambio de ruta) no debe sustituir la copia buena en caché */
+      if(r&&r.ok){var copy=r.clone();caches.open(CACHE).then(function(c){c.put("index.html",copy);});}
       return r;
     }).catch(function(){return caches.match("index.html");}));
     return;

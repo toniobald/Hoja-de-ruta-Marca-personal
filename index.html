@@ -1807,8 +1807,11 @@ function pushOn(){
   pushMsg("Un momento…");
   var permP;
   try{permP=Notification.requestPermission();}catch(e){permP=Promise.resolve("denied");}   /* dentro del gesto del toque */
+  /* Algunos Safari antiguos dejan la promesa de permiso colgada sin resolver nunca:
+     tras 8s se trata como si no hubiera permiso, en vez de dejar "Un momento…" fijo */
+  var permTimeout=new Promise(function(res){setTimeout(function(){res("denied");},8000);});
   var pub=null;
-  Promise.resolve(permP).then(function(perm){
+  Promise.race([Promise.resolve(permP),permTimeout]).then(function(perm){
     if(perm!=="granted")throw new Error("perm");
     return ghGet("avisos.json");
   }).then(function(f){
