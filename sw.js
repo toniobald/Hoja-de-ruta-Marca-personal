@@ -1,7 +1,7 @@
 /* Service worker de la cáscara. Solo guarda la app (código e iconos), nunca tus datos. Sube VERSION si cambias iconos o manifest. */
-var VERSION="v9";
+var VERSION="v10";
 var CACHE="sofrito-"+VERSION;
-var SHELL=["./","index.html","manifest.webmanifest","icon-180.png","icon-192.png","icon-512.png"];
+var SHELL=["./","index.html","manifest.webmanifest","icon-180.png","icon-192.png","icon-512.png","fonts/syne-latin.woff2","fonts/dm-sans-latin.woff2","fonts/geist-mono-latin.woff2"];
 
 self.addEventListener("install",function(e){
   e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(SHELL);}).then(function(){return self.skipWaiting();}));
